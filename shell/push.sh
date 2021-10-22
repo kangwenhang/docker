@@ -66,7 +66,9 @@ function Script_Pre {
 function Del_Party {
   for m in `ls`;do
     if [ "$m" != .git ];then
-    rm -rf $m
+      rm -rf $m
+      echo "拷贝确认文件"
+      cp -fv $dir_root/sample/model.sample $tongbu_push/model
     fi
   done
 }
@@ -352,38 +354,46 @@ function Local_Change_diy_party_warehouse {
 function Push_github {
   echo -e "\n===========================开始上传文件至网端==========================\n"
   cd $tongbu_push
-  chmod -R 777 $tongbu_push
-  git rm -rq --cached .
-  git add .
-  git config user.name "$diy_user_name"
-  git config user.email "$diy_user_email"
-  git commit --allow-empty -m "$diy_commit"
-  git config --global --add core.filemode false
-  git config --global http.sslVerify "false"
-  git config --global sendpack.sideband false
-  git config --local sendpack.sideband false
-  git config --global http.postBuffer 524288000
-  git push --force "https://$diy_user_name:$github_api@$diy_url" HEAD:$diy_branch
-  if [ $? = 0 ]; then
-    echo "上传成功"
-    rm -rf $tongbu
+  if [ -e "model" ];then
+    echo "确认文件夹存在"
+    rm -rf model
+    chmod -R 777 $tongbu_push
+    git rm -rq --cached .
+    git add .
+    git config user.name "$diy_user_name"
+    git config user.email "$diy_user_email"
+    git commit --allow-empty -m "$diy_commit"
+    git config --global --add core.filemode false
+    git config --global http.sslVerify "false"
+    git config --global sendpack.sideband false
+    git config --local sendpack.sideband false
+    git config --global http.postBuffer 524288000
+    git push --force "https://$diy_user_name:$github_api@$diy_url" HEAD:$diy_branch
+    if [ $? = 0 ]; then
+      echo "上传成功"
+      rm -rf $tongbu
+    else
+      k=1
+      while [[ k -le 3 ]]; do
+        echo "上传失败,重试执行第$k次"
+        sleep 20s
+        git push --force "https://$diy_user_name:$github_api@$diy_url" HEAD:$diy_branch
+        if [ $? = 0 ]; then
+          echo "上传成功"
+          rm -rf $tongbu
+          return
+        else
+          let k++
+        fi
+      done
+      echo "上传失败，正在恢复文件"
+      rm -rf $tongbu
+    fi
   else
-    k=1
-    while [[ k -le 3 ]]; do
-      echo "上传失败,重试执行第$k次"
-      sleep 20s
-      git push --force "https://$diy_user_name:$github_api@$diy_url" HEAD:$diy_branch
-      if [ $? = 0 ]; then
-        echo "上传成功"
-        rm -rf $tongbu
-        return
-      else
-        let k++
-      fi
-    done
-    echo "上传失败，正在恢复文件"
+    echo "文件夹错误，取消上传"
     rm -rf $tongbu
   fi
+  
   echo -e "\n===========================上传文件至网端结束==========================\n"
 }
 
