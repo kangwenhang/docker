@@ -67,8 +67,6 @@ function Del_Party {
   for m in `ls`;do
     if [ "$m" != .git ];then
       rm -rf $m
-      echo "拷贝确认文件"
-      cp -fv $dir_root/sample/model.sample $tongbu_push/model
     fi
   done
 }
@@ -345,6 +343,8 @@ function Local_Change_diy_party_warehouse {
     fi
   fi
   echo -e "\n=========================识别并合并diy文件结束==========================\n"
+  echo "拷贝确认文件"
+  cp -fv $dir_root/sample/model.sample $tongbu_push/model
 }
 
 #替换文件内容(正在开发)
