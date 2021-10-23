@@ -356,7 +356,6 @@ function Push_github {
   cd $tongbu_push
   if [ -e "model" ];then
     echo "确认文件夹存在"
-    rm -rf model
     chmod -R 777 $tongbu_push
     git rm -rq --cached .
     git add .
