@@ -21,6 +21,12 @@ if [ ! -s ${dir_root}/config/config.sh ]; then
   echo
 fi
 
+if [ ! -s ${dir_root}/.gitignore_global ]; then
+  echo -e "检测到gitignore_global不存在，从示例文件复制一份用于初始化...\n"
+  cp -fv ${dir_root}/sample/gitignore_global.sample ${dir_root}/.gitignore_global
+  echo
+fi
+
 if [ ! -d "${dir_root}/logs/" ]; then
   echo -e "检测到log文件夹不存在，创建文件夹...\n"
   mkdir -p ${dir_root}/logs
@@ -45,12 +51,17 @@ if [ ! -d "${dir_root}/backup/raw/" ]; then
   echo
 fi
 
-echo -e "==================2. 启动定时同步（15s同步一次）========================\n"
+echo -e "==================2. 启动全局忽略========================\n"
+cd ${dir_root}
+git config --global core.excludesfile ~/.gitignore_global
+echo -e "全局忽略启动成功...\n"
+
+echo -e "==================3. 启动定时同步（15s同步一次）========================\n"
 cd ${dir_root}/shell
 nohup ./upcron.sh >/dev/null 2>log &
 echo -e "定时同步启动成功...\n"
 
-echo -e "======================3.启动定时========================\n"
+echo -e "======================4.启动定时========================\n"
 : > /var/log/cron.log
 rm -rf /run/rsyslogd.pid
 rm -rf /var/run/crond.pid
