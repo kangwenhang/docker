@@ -4,11 +4,16 @@
 source /push/shell/share.sh
 source $config/$config_use.sh
 
-#初始化文件夹
+#清除缓存
 function Initialization {
-  echo "开始执行初始化"
-  rm -rf $tongbu_push/.
-  echo "初始化完成"
+  if [ ! -d "$tongbu_push" ];then
+    echo "文件夹不存在，跳过清理"
+  else
+    echo "开始清理文件夹"
+    cd $tongbu_push
+    rm -rf *
+    rm -rf .*
+  fi
   sleep 3s
 }
 
@@ -97,7 +102,7 @@ function Pull_diy_Third_party_warehouse {
       fi
     done
     echo "克隆主仓库失败，正在恢复文件"
-    rm -rf $tongbu_push/.
+    Initialization
     exit
   fi
 }
@@ -370,7 +375,7 @@ function Push_github {
     git push --force "https://$diy_user_name:$github_api@$diy_url" HEAD:$diy_branch
     if [ $? = 0 ]; then
       echo "上传成功"
-      rm -rf $tongbu_push/.
+      Initialization
     else
       k=1
       while [[ k -le 3 ]]; do
@@ -379,18 +384,18 @@ function Push_github {
         git push --force "https://$diy_user_name:$github_api@$diy_url" HEAD:$diy_branch
         if [ $? = 0 ]; then
           echo "上传成功"
-          rm -rf $tongbu_push/.
+          Initialization
           return
         else
           let k++
         fi
       done
       echo "上传失败，正在恢复文件"
-      rm -rf $tongbu_push/.
+      Initialization
     fi
   else
     echo "文件夹错误，取消上传"
-    rm -rf $tongbu_push/.
+    Initialization
   fi
   
   echo -e "\n===========================上传文件至网端结束==========================\n"
