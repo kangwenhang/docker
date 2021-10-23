@@ -11,8 +11,9 @@ function Initialization {
   else
     echo "开始清理文件夹"
     cd $tongbu_push
-    rm -rf *
-    rm -rf .*
+    for n in `ls`;do
+      rm -rf $n
+    done
   fi
   sleep 3s
 }
