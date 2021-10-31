@@ -369,10 +369,12 @@ function Push_github {
     git config user.email "$diy_user_email"
     git commit --allow-empty -m "$diy_commit"
     git config --global --add core.filemode false
-    git config --global http.sslVerify "false"
     git config --global sendpack.sideband false
     git config --local sendpack.sideband false
+    git config --global http.lowSpeedLimit 1000
+    git config --global http.lowSpeedTime 60
     git config --global http.postBuffer 524288000
+    git config --global http.sslVerify "false"
     git push --force "https://$diy_user_name:$github_api@$diy_url" HEAD:$diy_branch
     if [ $? = 0 ]; then
       echo "上传成功"
