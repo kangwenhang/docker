@@ -18,14 +18,14 @@ function Git_Off_Over {
 function Git_CloneShell {
   rm -rf $repo_docker
   cd repo
-  git clone -b master https://github.com/kangwenhang/docker.git $repo_docker
+  git clone -b master https://ghproxy.com/https://github.com/kangwenhang/docker.git $repo_docker
   if [ $? = 0 ]; then
     Git_Off_True
   else
     x=1
     while [[ x -le 3 ]]; do
       echo "克隆失败,重试执行第$x次"
-      git clone -b master https://github.com/kangwenhang/docker.git $repo_docker
+      git clone -b master https://ghproxy.com/https://github.com/kangwenhang/docker.git $repo_docker
       if [ $? = 0 ]; then
         Git_Off_True
         return
