@@ -45,7 +45,7 @@ if [ ! -d "${dir_root}/backup/raw/" ]; then
   echo
 fi
 
-echo -e "==================2. 启动定时同步（15s同步一次）========================\n"
+echo -e "==================2. 启动定时同步（实时）========================\n"
 cd ${dir_root}/shell
 nohup ./upcron.sh >/dev/null 2>log &
 echo -e "定时同步启动成功...\n"
