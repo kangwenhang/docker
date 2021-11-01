@@ -23,3 +23,6 @@ raw_flie=$dir_raw/$config_use
 tongbu=$dir_root/temporary_file/$config_use
 tongbu_push=$tongbu/push
 tongbu_temp=$tongbu/temp
+
+#update专用变量
+repo_docker=$dir_repo/docker

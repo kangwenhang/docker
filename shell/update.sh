@@ -3,24 +3,58 @@
 ## 导入通用变量与函数
 . /push/shell/share.sh
 
+function Git_Off_True {
+  echo -e "更新完成，更新文件并提升权限"
+  cp -rf $repo_docker/* $dir_root
+  chmod -R 777 $dir_root
+}
+
+function Git_Off_Over {
+  echo -e "更新失败，清理缓存并提升权限"
+  rm -rf $repo_docker
+  chmod -R 777 $dir_root
+}
+
 function Git_PullShell {
   git config --global http.version HTTP/1.1
   echo -e "更新shell脚本\n"
-  cd $dir_root
+  cd $repo_docker
   git fetch --all
   ExitStatusShell=$?
   git reset --hard origin/master
 }
 
+function Git_CloneShell {
+  rm -rf $repo_docker
+  cd repo
+  git clone -b master https://github.com/kangwenhang/docker.git $repo_docker
+  if [ $? = 0 ]; then
+    Git_Off_True
+  else
+    x=1
+    while [[ x -le 3 ]]; do
+      echo "克隆失败,重试执行第$x次"
+      git clone -b master https://github.com/kangwenhang/docker.git $repo_docker
+      if [ $? = 0 ]; then
+        Git_Off_True
+        return
+      else
+        let x++
+        sleep 20s
+      fi
+    done
+    Git_Off_Over
+    exit
+  fi
+}
+
 function Update_Config {
   if [ $ExitStatusShell = 0 ]; then
-    echo -e "更新config.sh.sample\n"
-    cp -rf $dir_root/sample/config.sh.sample $dir_root/config/config.sh.sample
-    echo -e "提升权限"
-    chmod -R 777 $dir_root
+    echo -e "pull成功，开始更新文件"
+    Git_Off_True
   else
-    echo -e "更新shell失败了，提升权限"
-    chmod -R 777 $dir_root
+    echo -e "pull失败了，采用clone更新"
+    Git_CloneShell
   fi
 }
 

@@ -35,6 +35,7 @@ RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list \
     && sed -i '/imklog/s/^/#/' /etc/rsyslog.conf \
     && sed -i 's/#cron/cron/g' /etc/rsyslog.d/50-default.conf \
     && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    && git clone -b ${PUSH_BRANCH} ${PUSH_URL} ${dir_root} \
+    && git clone -b ${PUSH_BRANCH} ${PUSH_URL} ${dir_root}/repo/docker \
+    && cp ${dir_root}/repo/docker/* ${dir_root} \
     && chmod -R 777 ${dir_root}
 ENTRYPOINT ["./docker/docker-entrypoint.sh"]
