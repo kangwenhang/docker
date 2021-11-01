@@ -34,6 +34,6 @@ do
     if [ -s ${dir_root}/model ]
         rm -rf model
     else
-        echo"完美"
+        echo "完美"
     fi
 done
