@@ -15,15 +15,6 @@ function Git_Off_Over {
   chmod -R 777 $dir_root
 }
 
-function Git_PullShell {
-  git config --global http.version HTTP/1.1
-  echo -e "更新shell脚本\n"
-  cd $repo_docker
-  git fetch --all
-  ExitStatusShell=$?
-  git reset --hard origin/master
-}
-
 function Git_CloneShell {
   rm -rf $repo_docker
   cd repo
@@ -46,6 +37,15 @@ function Git_CloneShell {
     Git_Off_Over
     exit
   fi
+}
+
+function Git_PullShell {
+  git config --global http.version HTTP/1.1
+  echo -e "更新shell脚本\n"
+  cd $repo_docker
+  git fetch --all
+  ExitStatusShell=$?
+  git reset --hard origin/master
 }
 
 function Update_Config {
