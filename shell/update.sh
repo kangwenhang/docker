@@ -66,7 +66,6 @@ function Update_Config {
 }
 
 echo "开始运行"
-Git_PullShell
 Update_Config
 echo "运行结束，退出"
 exit
