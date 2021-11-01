@@ -46,14 +46,21 @@ function Git_PullShell {
   git fetch --all
   ExitStatusShell=$?
   git reset --hard origin/master
-}
-
-function Update_Config {
   if [ $ExitStatusShell = 0 ]; then
     echo -e "pull成功，开始更新文件"
     Git_Off_True
   else
     echo -e "pull失败了，采用clone更新"
+    Git_CloneShell
+  fi
+}
+
+function Update_Config {
+  if [ -d "$repo_docker" ];then
+    echo -e "检测到文件夹，采用pull更新"
+    Git_PullShell
+  else
+    echo -e "未检测到文件夹，采用clone更新"
     Git_CloneShell
   fi
 }
