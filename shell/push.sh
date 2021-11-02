@@ -366,35 +366,41 @@ function Push_github {
     git rm -rq --cached .
     git add .
     git status --short 2>&1 | tee $diy_logs/commit.log
-    git config user.name "$diy_user_name"
-    git config user.email "$diy_user_email"
-    git commit --allow-empty -m "$diy_commit"
-    git config --global --add core.filemode false
-    git config --global sendpack.sideband false
-    git config --local sendpack.sideband false
-    git config --global http.lowSpeedLimit 1000
-    git config --global http.lowSpeedTime 60
-    git config --global http.postBuffer 524288000
-    git config --global http.sslVerify "false"
-    git push --force "https://$diy_user_name:$github_api@$diy_url" HEAD:$diy_branch
-    if [ $? = 0 ]; then
-      echo "上传成功"
-      Initialization
+    if test -s $diy_logs/commit.log;then
+      echo "文件存在变更，正常上传"
+      git config user.name "$diy_user_name"
+      git config user.email "$diy_user_email"
+      git commit --allow-empty -m "$diy_commit"
+      git config --global --add core.filemode false
+      git config --global sendpack.sideband false
+      git config --local sendpack.sideband false
+      git config --global http.lowSpeedLimit 1000
+      git config --global http.lowSpeedTime 60
+      git config --global http.postBuffer 524288000
+      git config --global http.sslVerify "false"
+      git push --force "https://$diy_user_name:$github_api@$diy_url" HEAD:$diy_branch
+      if [ $? = 0 ]; then
+        echo "上传成功"
+        Initialization
+      else
+        k=1
+        while [[ k -le 3 ]]; do
+          echo "上传失败,重试执行第$k次"
+          sleep 20s
+          git push --force "https://$diy_user_name:$github_api@$diy_url" HEAD:$diy_branch
+          if [ $? = 0 ]; then
+            echo "上传成功"
+            Initialization
+            return
+          else
+            let k++
+          fi
+        done
+        echo "上传失败，正在恢复文件"
+        Initialization
+      fi
     else
-      k=1
-      while [[ k -le 3 ]]; do
-        echo "上传失败,重试执行第$k次"
-        sleep 20s
-        git push --force "https://$diy_user_name:$github_api@$diy_url" HEAD:$diy_branch
-        if [ $? = 0 ]; then
-          echo "上传成功"
-          Initialization
-          return
-        else
-          let k++
-        fi
-      done
-      echo "上传失败，正在恢复文件"
+      echo "无文件变更，取消上传，跳出并恢复文件"
       Initialization
     fi
   else
