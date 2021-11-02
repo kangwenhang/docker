@@ -365,6 +365,7 @@ function Push_github {
     chmod -R 777 $tongbu_push
     git rm -rq --cached .
     git add .
+    git status --short 2>&1 | tee $diy_logs/commit.log
     git config user.name "$diy_user_name"
     git config user.email "$diy_user_email"
     git commit --allow-empty -m "$diy_commit"
@@ -400,7 +401,6 @@ function Push_github {
     echo "文件夹错误，取消上传"
     Initialization
   fi
-  
   echo -e "\n===========================上传文件至网端结束==========================\n"
 }
 
