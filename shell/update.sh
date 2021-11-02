@@ -17,7 +17,7 @@ function Git_Off_Over {
 
 function Git_CloneShell {
   rm -rf $repo_docker
-  cd repo
+  cd $dir_repo
   git clone -b master https://ghproxy.com/https://github.com/kangwenhang/docker.git $repo_docker
   if [ $? = 0 ]; then
     Git_Off_True
