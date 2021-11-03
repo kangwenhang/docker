@@ -36,7 +36,6 @@ function Git_CloneShell {
       fi
     done
     Git_Off_Over
-    exit
   fi
 }
 
