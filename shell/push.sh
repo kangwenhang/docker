@@ -349,6 +349,7 @@ function Local_Change_diy_party_warehouse {
 
 #替换文件内容(仅替换互助码)
 function Diy_Replace {
+echo -e "\n=============================开始替换文件内容==============================\n"
 m=1
 while [ $m -le 1000 ]; do
   Tmp_url=url$m
@@ -361,10 +362,12 @@ while [[ $n -le ${diyurl} ]]; do
   Tmp_url=url$n
   url_Tmp=${!Tmp_url}
   pint_url=${url_Tmp}
-  sed_use=${sed_use}s@$pint_url@123@g;
+  sed_use=${sed_use}s@$pint_url@123@g';'
   let n++
 done
-  sed -i "$sed_use" $tongbu_push/*.*
+sed -i "$sed_use" $tongbu_push/*.js
+sed -i "$sed_use" $tongbu_push/*.py
+echo -e "\n=============================替换文件内容结束==============================\n"
 }
 
 #确认项目
