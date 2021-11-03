@@ -361,7 +361,7 @@ while [[ $n -le ${diyurl} ]]; do
   Tmp_url=url$n
   url_Tmp=${!Tmp_url}
   pint_url=${url_Tmp}
-  sed_use=$sed_uses@$pint_url@123@g;
+  sed_use=${sed_use}s@$pint_url@123@g;
   let n++
 done
   sed -i "$sed_use" $tongbu_push/*.*
@@ -373,7 +373,7 @@ function Yes_Open {
   echo "拷贝确认文件"
   cp -fv $dir_root/sample/model.sample $tongbu_push/model
   echo "拷贝.gitignore，黑白名单请填写 $file_gitignore 中的内容"
-  cp -rf $file_gitignore $tongbu_push
+  cp -rfv $file_gitignore $tongbu_push
   echo -e "\n=============================项目确认完成==============================\n"
 }
 
