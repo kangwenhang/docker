@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ## 导入通用变量与函数
-. /push/shell/share.sh
+repo_docker=$dir_root/repo/docker
 
 function Git_Off_True {
   echo -e "更新完成，更新文件并提升权限"

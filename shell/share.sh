@@ -27,9 +27,6 @@ file_config=$config/$config_use/config.sh
 file_diyreplace=$config/$config_use/diyreplace.sh
 file_gitignore=$config/$config_use/.gitignore
 
-#update专用变量
-repo_docker=$dir_repo/docker
-
 #调用
 source $file_diyreplace
 source $file_config
