@@ -151,6 +151,7 @@ function Git_Pull {
 
 #clone函数
 function Git_Clone {
+  cd $dir_repo
   git clone -b $pint_branch ${github_proxy_url}$pint_warehouse $repo_path
   if [ $? = 0 ]; then
     Git_Backup
@@ -204,11 +205,9 @@ function Clone_Pull {
   if [ ! -d "$repo_path" ];then
     echo "文件夹不存在，创建并执行clone"
     mkdir -p $repo_path
-    cd $dir_repo
     Git_Clone
   else
     echo "文件夹存在，进行下一步"
-    cd $dir_repo
     ls -a
     if [ ! -d "$repo_path/.git/" ];then
       echo "执行clone"
