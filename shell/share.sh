@@ -23,6 +23,13 @@ raw_flie=$dir_raw/$config_use
 tongbu=$dir_root/temporary_file/$config_use
 tongbu_push=$tongbu/push
 tongbu_temp=$tongbu/temp
+file_config=$config/$config_use/config.sh
+file_diyreplace=$config/$config_use/diyreplace.sh
+file_gitignore=$config/$config_use/.gitignore
 
 #update专用变量
 repo_docker=$dir_repo/docker
+
+#调用
+source $file_diyreplace
+source $file_config

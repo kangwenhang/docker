@@ -2,7 +2,6 @@
 
 #变量判定
 source /push/shell/share.sh
-source $config/$config_use.sh
 
 #清除缓存
 function Initialization {
@@ -147,7 +146,6 @@ function Git_Pull {
     Git_Backup_Old
   fi
 }
-
 
 #clone函数
 function Git_Clone {
@@ -326,7 +324,7 @@ Update_Own_Raw () {
     done
     [[ $rm_mark == yes ]] && rm -f $raw_flie/$file 2>/dev/null
   done
-  echo -e "\n=========================拉取raw并合并结束===========================\n"
+  [[ ${#OwnRawFile[*]} -gt 0 ]] && echo -e "\n=========================拉取raw并合并结束===========================\n"
 }
 
 #合并仓库(本地仓库)
@@ -336,8 +334,6 @@ function Local_Change_diy_party_warehouse {
   if [ ! -d "$dir_root/diy/$config_use" ];then
     echo "$diy_config文件夹不存在,创建$config_use文件夹"
     mkdir -p $diy_config
-    cp -fv $dir_sample/gitignore.sample $diy_config/.gitignore
-    echo "$diy_config文件夹创建完成，请自行导入文件，黑白名单请填写$diy_config/.gitignore 中的内容"
   else
     cd $diy_config
     if [ "`ls -A $diy_config`" = "" ];then
@@ -349,15 +345,41 @@ function Local_Change_diy_party_warehouse {
     fi
   fi
   echo -e "\n=========================识别并合并diy文件结束==========================\n"
-  echo "拷贝确认文件"
-  cp -fv $dir_root/sample/model.sample $tongbu_push/model
 }
 
-#替换文件内容(正在开发)
+#替换文件内容(仅替换互助码)
+function Diy_Replace {
+m=1
+while [ $m -le 1000 ]; do
+  Tmp_url=url$m
+  url_Tmp=${!Tmp_url}
+  [[ ${url_Tmp} ]] && diyurl=$m || break
+  let m++
+done
+n=1
+while [[ $n -le ${diyurl} ]]; do
+  Tmp_url=url$n
+  url_Tmp=${!Tmp_url}
+  pint_url=${url_Tmp}
+  sed_use=$sed_uses@$pint_url@123@g;
+  let n++
+done
+  sed -i "$sed_use" $tongbu_push/*.*
+}
 
+#确认项目
+function Yes_Open {
+  echo -e "\n=============================项目最终确认==============================\n"
+  echo "拷贝确认文件"
+  cp -fv $dir_root/sample/model.sample $tongbu_push/model
+  echo "拷贝.gitignore，黑白名单请填写 $file_gitignore 中的内容"
+  cp -rf $file_gitignore $tongbu_push
+  echo -e "\n=============================项目确认完成==============================\n"
+}
 
 #上传文件至github
 function Push_github {
+  Yes_Open
   echo -e "\n===========================开始上传文件至网端==========================\n"
   cd $tongbu_push
   if [ -e "model" ];then
@@ -419,6 +441,7 @@ Count_diy_party_warehouse
 Change_diy_party_warehouse
 Update_Own_Raw
 Local_Change_diy_party_warehouse
+Diy_Replace
 Push_github
 echo "运行结束，退出"
 exit

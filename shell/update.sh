@@ -6,6 +6,7 @@
 function Git_Off_True {
   echo -e "更新完成，更新文件并提升权限"
   cp -rf $repo_docker/* $dir_root
+  cp -rf ${dir_root}/sample/config_model/ ${dir_root}/config/
   chmod -R 777 $dir_root
 }
 

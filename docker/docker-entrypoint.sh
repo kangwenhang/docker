@@ -15,34 +15,34 @@ else
   echo -e "成功添加定时任务...\n"
 fi
 
-if [ ! -s ${dir_root}/config/config.sh ]; then
-  echo -e "检测到config配置目录下不存在config.sh，从示例文件复制一份用于初始化...\n"
-  cp -fv ${dir_root}/sample/config.sh.sample ${dir_root}/config/config.sh
-  echo
+if [ ! -d "${dir_root}/config/config_model/" ]; then
+  echo -e "检测到config_model文件夹不存在，拷贝文件夹...\n"
+  cp -rf ${dir_root}/sample/config_model/ ${dir_root}/config/
+  echo -e "成功创建文件夹 config_model \n"
 fi
 
 if [ ! -d "${dir_root}/logs/" ]; then
   echo -e "检测到log文件夹不存在，创建文件夹...\n"
   mkdir -p ${dir_root}/logs
-  echo
+  echo -e "成功创建文件夹 logs \n"
 fi
 
 if [ ! -d "${dir_root}/diy/" ]; then
   echo -e "检测到diy文件夹不存在，创建文件夹...\n"
   mkdir -p ${dir_root}/diy
-  echo
+  echo -e "成功创建文件夹 diy \n"
 fi
 
 if [ ! -d "${dir_root}/backup/old/" ]; then
   echo -e "检测到/backup/old文件夹不存在，创建文件夹...\n"
   mkdir -p ${dir_root}/backup/old
-  echo
+  echo -e "成功创建文件夹 backup/old \n"
 fi
 
 if [ ! -d "${dir_root}/backup/raw/" ]; then
   echo -e "检测到/backup/raw文件夹不存在，创建文件夹...\n"
   mkdir -p ${dir_root}/backup/raw
-  echo
+  echo -e "成功创建文件夹 backup/raw \n"
 fi
 
 echo -e "==================2. 启动定时同步（实时）========================\n"
