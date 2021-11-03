@@ -1,16 +1,16 @@
 上传用docker-----仅上传
 
 #更新: \
-1.0 采用clone为主要下载方式-----------------优点：占用小；缺点：缓慢，出错概率高。\
-2.0 采用clone-pull为主要下载方式，且存在备份--------优点：占用小，出错概率降低；缺点：仍然易出错，且同步后的文件缺失严重。\
-3.0 更换底层，采用clone-pull为主要下载方式，辅助备份方式上传-------------优点：出错率极低，且备份齐全，方便追溯文件，自定义化程度高；缺点：文件占用大，镜像偏大。\
+1.0 采用clone为主要下载方式-----------------`# 优点：占用小`；`# 缺点：缓慢，出错概率高`。\
+2.0 采用clone-pull为主要下载方式，且存在备份--------`# 优点：占用小，出错概率降低`；`# 缺点：仍然易出错，且同步后的文件缺失严重`。\
+3.0 更换底层，采用clone-pull为主要下载方式，辅助备份方式上传-------------`# 优点：出错率极低，且备份齐全，方便追溯文件，自定义化程度高`；`# 缺点：文件占用大，镜像偏大`。
 
 #镜像 \
-docker run -dit \\
--v /home/push/config:/push/config `# 配置文件` \\
--v /home/push/logs:/push/logs `# 日志保存目录` \\
--v /home/push/diy:/push/diy `# 自定义脚本目录` \\
--v /home/push/backup:/push/backup `# 脚本备份目录` \\
---name push \\
---restart always \\
-k1483162508/push:3.0\
+docker run -dit \\\
+-v /home/push/config:/push/config `# 配置文件` \\\
+-v /home/push/logs:/push/logs `# 日志保存目录` \\\
+-v /home/push/diy:/push/diy `# 自定义脚本目录` \\\
+-v /home/push/backup:/push/backup `# 脚本备份目录` \\\
+--name push \\\
+--restart always \\\
+k1483162508/push:3.0
