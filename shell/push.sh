@@ -143,7 +143,9 @@ function Git_Pull {
   if [ $? = 0 ] && [ $ExitStatusShell = 0 ]; then
     Git_Backup
   else
-    Git_Backup_Old
+    echo "清理失败缓存，并采用clone"
+    rm -rf $repo_path
+    Git_Clone
   fi
 }
 
