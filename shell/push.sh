@@ -403,15 +403,49 @@ function Yes_Open {
 #获取仓库更新日志
 function Git_log {
   if [ "$diy_commit" = "" ]; then
+    cd $submit
     echo "未设置自定义提交内容，使用系统级识别日志"
-    grep "(?:^|\n)A.*" $submit/commit.log 2>&1 | tee $submit/A.log
-    grep "(?:^|\n)C.*" $submit/commit.log 2>&1 | tee $submit/C.log
-    grep "(?:^|\n)D.*" $submit/commit.log 2>&1 | tee $submit/D.log
-    grep "(?:^|\n)M.*" $submit/commit.log 2>&1 | tee $submit/M.log
-    grep "(?:^|\n)R.*" $submit/commit.log 2>&1 | tee $submit/R.log
-    grep "(?:^|\n)T.*" $submit/commit.log 2>&1 | tee $submit/T.log
-    grep "(?:^|\n)U.*" $submit/commit.log 2>&1 | tee $submit/U.log
-    grep "(?:^|\n)X.*" $submit/commit.log 2>&1 | tee $submit/X.log
+    grep ^[A].* commit.log | tee A.log
+    grep ^[C].* commit.log | tee C.log
+    grep ^[D].* commit.log | tee D.log
+    grep ^[M].* commit.log | tee M.log
+    grep ^[R].* commit.log | tee R.log
+    grep ^[T].* commit.log | tee T.log
+    grep ^[U].* commit.log | tee U.log
+    grep ^[X].* commit.log | tee X.log
+    cat /dev/null > commit.log
+    for z in `ls`;do
+      if [ "$z" != commit.log ];then
+        sed -e 's/[^ ]* //' $z 2>&1 | tee $z
+        sed '1s/^/[/;$!s/$/,/;$s/$/]/' $z 2>&1 | tee $z
+        cat $z | xargs 2>&1 | tee $z
+      fi
+    done
+    if [ -e "A.log" ] && [ test -s A.log ];then
+      sed 's/^/新增：/' A.log | tee -a commit.log
+    fi
+    if [ -e "C.log" ] && [ test -s C.log ];then
+      sed 's/^/拷贝：/' C.log | tee -a commit.log
+    fi
+    if [ -e "D.log" ] && [ test -s D.log ];then
+      sed 's/^/删除：/' D.log | tee -a commit.log
+    fi
+    if [ -e "M.log" ] && [ test -s M.log ];then
+      sed 's/^/修改内容：/' M.log | tee -a commit.log
+    fi
+    if [ -e "R.log" ] && [ test -s R.log ];then
+      sed 's/^/修改文件名：/' R.log | tee -a commit.log
+    fi
+    if [ -e "T.log" ] && [ test -s T.log ];then
+      sed 's/^/文件类型修改：/' T.log | tee -a commit.log
+    fi
+    if [ -e "U.log" ] && [ test -s U.log ];then
+      sed 's/^/未合并：/' U.log | tee -a commit.log
+    fi
+    if [ -e "X.log" ] && [ test -s X.log ];then
+      sed 's/^/状态错误：/' X.log | tee -a commit.log
+    fi
+    diy_commit='cat commit.log'
   else
     echo "已设置提交内容，进行下一步"
   fi
@@ -427,7 +461,7 @@ function Push_github {
     chmod -R 777 $tongbu_push
     git rm -rq --cached .
     git add .
-    git status --short 2>&1 | tee $submit/commit.log
+    git status --short | tee $submit/commit.log
     if test -s $submit/commit.log;then
       echo "文件存在变更，正常上传"
       Git_log
