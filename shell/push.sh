@@ -472,6 +472,7 @@ function Push_github {
 echo "开始运行"
 Initialization
 Script_Pre
+mkdir_file_folder
 Pull_diy_Third_party_warehouse
 Count_diy_party_warehouse
 Change_diy_party_warehouse
