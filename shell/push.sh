@@ -3,27 +3,13 @@
 #变量判定
 source /push/shell/share.sh
 
-#清除缓存
-function Initialization {
-  if [ ! -d "$tongbu_push" ];then
-    echo "文件夹不存在，跳过清理"
-  else
-    echo "开始清理文件夹"
-    cd $tongbu_push
-    for n in `ls -a`;do
-      rm -rf $n >/dev/null 2>&1
-    done
-  fi
-  sleep 3s
-}
-
 function mkdir_file_folder {
-  echo -e "\n======================开始执创建必须的文件夹=======================\n"
+  echo "开始执创建必须的文件夹"
   mkdir -p $tongbu_temp
   mkdir -p $raw_flie
   mkdir -p $diy_config
   mkdir -p $submit
-  echo -e "\n======================执创建必须的文件夹结束=======================\n"
+  echo "执创建必须的文件夹结束"
 }
 
 #清除git信息
@@ -61,6 +47,22 @@ function Script_Pre {
     echo "定义autocrlf参数为$autocrlf"
     git config --global core.autocrlft $autocrlf
   fi
+}
+
+#前置
+function Initialization {
+  if [ ! -d "$tongbu_push" ];then
+    echo "文件夹不存在，跳过清理"
+  else
+    echo "开始清理文件夹"
+    cd $tongbu_push
+    for n in `ls -a`;do
+      rm -rf $n >/dev/null 2>&1
+    done
+  fi
+  sleep 3s
+  mkdir_file_folder
+  Script_Pre
 }
 
 #清除库内容
@@ -474,8 +476,6 @@ function Push_github {
 #执行函数
 echo "开始运行"
 Initialization
-Script_Pre
-mkdir_file_folder
 Pull_diy_Third_party_warehouse
 Count_diy_party_warehouse
 Change_diy_party_warehouse
