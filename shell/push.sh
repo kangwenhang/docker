@@ -174,7 +174,9 @@ function Consolidated_Warehouse {
       cp -rn $tongbu_temp/. $tongbu_push
     fi
     echo "合并$j号仓库成功，清理文件"
-    rm -rf $tongbu_temp/.
+    for n in `ls -a`;do
+      rm -rf $n >/dev/null 2>&1
+    done
   else
     echo "您已选择将文件夹合并到根目录，开始执行"
     sleep 3s
@@ -190,7 +192,9 @@ function Consolidated_Warehouse {
       cp -rn $tongbu_temp/$pint_diy_feihebing $tongbu_push
     fi
     echo "合并$j号仓库成功，清理文件"
-    rm -rf $tongbu_temp/.
+    for n in `ls -a`;do
+      rm -rf $n >/dev/null 2>&1
+    done
   fi
 }
 
