@@ -69,7 +69,7 @@ function Update_Config {
 
 #临时更新
 function temporary {
-  source $shell_model/uptemp.sh > logs/update_temporary.log
+  source $shell_model/uptemp.sh > $logs/update_temporary.log
 }
 
 echo "开始运行"
