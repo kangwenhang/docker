@@ -416,10 +416,12 @@ function Git_log {
     cat /dev/null > $submit/commit.log
     for z in `ls $submit`;do
       if [ "$z" != "$submit/commit.log" ];then
-        awk '{$1="";print $0}' $submit/$z 2>&1 | tee $submit/push.log
-        sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/push.log 2>&1 | tee $submit/$z
-        cat $submit/$z | xargs 2>&1 | tee $submit/push.log
-        cat $submit/push.log 2>&1 | tee $submit/$z
+        if test -s $submit/$z;then
+          awk '{$1="";print $0}' $submit/$z 2>&1 | tee $submit/push.log
+          sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/push.log 2>&1 | tee $submit/$z
+          cat $submit/$z | xargs 2>&1 | tee $submit/push.log
+          cat $submit/push.log 2>&1 | tee $submit/$z
+        fi
       fi
     done
     if [ -e "$submit/A.log" ] && test -s $submit/A.log;then
