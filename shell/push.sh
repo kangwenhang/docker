@@ -415,38 +415,55 @@ function Git_log {
     grep ^[U].* commit.log | tee U.log
     grep ^[X].* commit.log | tee X.log
     cat /dev/null > commit.log
-    for z in `ls`;do
-      if [ "$z" != commit.log ];then
-        sed -e 's/[^ ]* //' $z 2>&1 | tee $z
-        sed '1s/^/[/;$!s/$/,/;$s/$/]/' $z 2>&1 | tee $z
-        cat $z | xargs 2>&1 | tee $z
-      fi
-    done
     if [ -e "A.log" ] && test -s A.log;then
+      sed -e 's/[^ ]* //' A.log | tee A.log
+      sed '1s/^/[/;$!s/$/,/;$s/$/]/' A.log | tee A.log
+      cat A.log | xargs | tee A.log
       sed 's/^/新增：/' A.log | tee -a commit.log
     fi
     if [ -e "C.log" ] && test -s C.log;then
+      sed -e 's/[^ ]* //' C.log | tee C.log
+      sed '1s/^/[/;$!s/$/,/;$s/$/]/' C.log | tee C.log
+      cat C.log | xargs | tee C.log
       sed 's/^/拷贝：/' C.log | tee -a commit.log
     fi
     if [ -e "D.log" ] && test -s D.log;then
+      sed -e 's/[^ ]* //' D.log | tee D.log
+      sed '1s/^/[/;$!s/$/,/;$s/$/]/' D.log | tee D.log
+      cat D.log | xargs | tee D.log
       sed 's/^/删除：/' D.log | tee -a commit.log
     fi
-    if [ -e "M.log" ] && test -s M.log ]];then
+    if [ -e "M.log" ] && test -s M.log;then
+      sed -e 's/[^ ]* //' M.log | tee M.log
+      sed '1s/^/[/;$!s/$/,/;$s/$/]/' M.log | tee M.log
+      cat M.log | xargs | tee M.log
       sed 's/^/修改内容：/' M.log | tee -a commit.log
     fi
-    if [ -e "R.log" ] && test -s R.log ]];then
+    if [ -e "R.log" ] && test -s R.log;then
+      sed -e 's/[^ ]* //' R.log | tee R.log
+      sed '1s/^/[/;$!s/$/,/;$s/$/]/' R.log | tee R.log
+      cat R.log | xargs | tee R.log
       sed 's/^/修改文件名：/' R.log | tee -a commit.log
     fi
     if [ -e "T.log" ] && test -s T.log;then
+      sed -e 's/[^ ]* //' T.log | tee T.log
+      sed '1s/^/[/;$!s/$/,/;$s/$/]/' T.log | tee T.log
+      cat T.log | xargs | tee T.log
       sed 's/^/文件类型修改：/' T.log | tee -a commit.log
     fi
     if [ -e "U.log" ] && test -s U.log;then
+      sed -e 's/[^ ]* //' U.log | tee U.log
+      sed '1s/^/[/;$!s/$/,/;$s/$/]/' U.log | tee U.log
+      cat U.log | xargs | tee U.log
       sed 's/^/未合并：/' U.log | tee -a commit.log
     fi
     if [ -e "X.log" ] && test -s X.log;then
+      sed -e 's/[^ ]* //' X.log | tee X.log
+      sed '1s/^/[/;$!s/$/,/;$s/$/]/' X.log | tee X.log
+      cat X.log | xargs | tee X.log
       sed 's/^/状态错误：/' X.log | tee -a commit.log
     fi
-    diy_commit='cat commit.log'
+    diy_commit=$(cat commit.log)
   else
     echo "已设置提交内容，进行下一步"
   fi
