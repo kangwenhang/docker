@@ -2,6 +2,8 @@
 
 ## 导入通用变量与函数
 repo_docker=$dir_root/repo/docker
+shell=${dir_root}/shell
+logs=${dir_root}/logs
 
 function Git_Off_True {
   echo -e "更新完成，更新文件并提升权限"
@@ -65,7 +67,13 @@ function Update_Config {
   fi
 }
 
+#临时更新
+function temporary {
+  source $shell_model/uptemp.sh > logs/update_temporary.log
+}
+
 echo "开始运行"
 Update_Config
+temporary
 echo "运行结束，退出"
 exit

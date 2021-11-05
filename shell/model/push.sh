@@ -422,10 +422,10 @@ function Push_github {
     chmod -R 777 $tongbu_push
     git rm -rq --cached .
     git add .
-    git status --short | tee $submit/commit.log
+    source $shell_model/status.sh > $submit/1.log
     if test -s $submit/commit.log;then
       echo "文件存在变更，正常上传"
-      source /push/shell/submit.sh > $submit/1.log
+      source $shell_model/submit.sh > $submit/1.log
       git config user.name "$diy_user_name"
       git config user.email "$diy_user_email"
       git commit --allow-empty -m "$diy_commit"

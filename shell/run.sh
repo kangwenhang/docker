@@ -7,5 +7,5 @@ source /push/shell/share.sh
 
 ##运行脚本
 mkdir -p $diy_logs
-source $shell/push.sh 2>&1 | tee $log_path
+source $shell_model/push.sh 2>&1 | tee $log_path
 exit

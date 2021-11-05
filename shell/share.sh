@@ -4,6 +4,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ## 通用变脸
 dir_root=/push
 shell=$dir_root/shell
+shell_model=$shell/model
 logs=$dir_root/logs
 config=$dir_root/config
 diy_logs=$logs/$config_use
