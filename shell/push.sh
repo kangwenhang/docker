@@ -414,7 +414,7 @@ function Git_log {
     grep ^[U].* $submit/commit.log 2>&1 | tee $submit/U.log
     grep ^[X].* $submit/commit.log 2>&1 | tee $submit/X.log
     cat /dev/null > $submit/commit.log
-    for z in `ls`;do
+    for z in `ls $submit`;do
       if [ "$z" != "$submit/commit.log" ];then
         awk '{$1="";print $0}' $submit/$z 2>&1 | tee $submit/push.log
         sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/push.log 2>&1 | tee $submit/$z
