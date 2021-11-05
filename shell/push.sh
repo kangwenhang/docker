@@ -3,6 +3,20 @@
 #变量判定
 source /push/shell/share.sh
 
+#前置
+function Initialization {
+  if [ ! -d "$tongbu_push" ];then
+    echo "文件夹不存在，跳过清理"
+  else
+    echo "开始清理文件夹"
+    cd $tongbu_push
+    for n in `ls -a`;do
+      rm -rf $n >/dev/null 2>&1
+    done
+  fi
+  sleep 3s
+}
+
 function mkdir_file_folder {
   echo "开始执创建必须的文件夹"
   mkdir -p $tongbu_temp
@@ -49,22 +63,6 @@ function Script_Pre {
   fi
 }
 
-#前置
-function Initialization {
-  if [ ! -d "$tongbu_push" ];then
-    echo "文件夹不存在，跳过清理"
-  else
-    echo "开始清理文件夹"
-    cd $tongbu_push
-    for n in `ls -a`;do
-      rm -rf $n >/dev/null 2>&1
-    done
-  fi
-  sleep 3s
-  mkdir_file_folder
-  Script_Pre
-}
-
 #清除库内容
 function Del_Party {
   for m in `ls`;do
@@ -76,6 +74,9 @@ function Del_Party {
 
 #主仓库(网络仓库)
 function Pull_diy_Third_party_warehouse {
+  Initialization
+  mkdir_file_folder
+  Script_Pre
   echo "正在克隆主仓库"
   git clone -b $diy_branch ${github_proxy_url}https://$diy_url $tongbu_push
   if [ $? = 0 ]; then
@@ -510,7 +511,6 @@ function Push_github {
 
 #执行函数
 echo "开始运行"
-Initialization
 Pull_diy_Third_party_warehouse
 Count_diy_party_warehouse
 Change_diy_party_warehouse
