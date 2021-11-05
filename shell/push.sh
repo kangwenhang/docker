@@ -6,18 +6,18 @@ source /push/shell/share.sh
 #前置
 function Initialization {
   if [ ! -d "$tongbu_push" ];then
-    echo "文件夹不存在，跳过清理"
+    echo "$tongbu_push不存在，跳过清理"
   else
-    echo "开始清理文件夹"
+    echo "开始清理$tongbu_push"
     cd $tongbu_push
     for n in `ls -a`;do
       rm -rf $n >/dev/null 2>&1
     done
   fi
   if [ ! -d "$submit" ];then
-    echo "文件夹不存在，跳过清理"
+    echo "$submit文件夹不存在，跳过清理"
   else
-    echo "开始清理文件夹"
+    echo "开始清理$submit"
     cd $submit
     for y in `ls -a`;do
       rm -rf $y >/dev/null 2>&1
