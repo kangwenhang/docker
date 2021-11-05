@@ -2,7 +2,7 @@
 
 ## 导入通用变量与函数
 repo_docker=$dir_root/repo/docker
-shell=${dir_root}/shell
+shell_model=${dir_root}/shell/model
 logs=${dir_root}/logs
 
 function Git_Off_True {
