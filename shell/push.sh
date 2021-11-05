@@ -462,7 +462,7 @@ function Git_log {
       cat $submit/X.log | xargs | tee $submit/X.log
       sed 's/^/状态错误：/' $submit/X.log | tee -a $submit/commit.log
     fi
-    diy_commit=$(cat commit.log)
+    diy_commit=$(cat $submit/commit.log)
   else
     echo "已设置提交内容，进行下一步"
   fi
