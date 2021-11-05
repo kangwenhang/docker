@@ -19,7 +19,6 @@ function Initialization {
 
 function mkdir_file_folder {
   echo -e "\n======================开始执创建必须的文件夹=======================\n"
-  mkdir -p "$tongbu_temp"
   mkdir -p "$tongbu_temp/$pint_diy_feihebing"
   mkdir -p "$raw_flie"
   mkdir -p "$repo_path"
