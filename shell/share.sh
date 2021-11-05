@@ -10,6 +10,7 @@ diy_logs=$logs/$config_use
 log_time=$(date "+%Y-%m-%d-%H-%M-%S.%N")
 log_path="$diy_logs/$log_time.log"
 ListCron=$config/crontab.list
+submit=$diy_logs/submit
 
 #push专用变量
 diy_config=$dir_root/diy/$config_use

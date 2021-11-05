@@ -17,24 +17,22 @@ function Initialization {
   sleep 3s
 }
 
+function mkdir_file_folder {
+  echo -e "\n======================开始执创建必须的文件夹=======================\n"
+  mkdir -p $tongbu_temp
+  mkdir -p $tongbu_temp/$pint_diy_feihebing
+  mkdir -p $raw_flie
+  mkdir -p $repo_path
+  mkdir -p $diy_config
+  mkdir -p $submit
+  echo -e "\n======================执创建必须的文件夹结束=======================\n"
+}
+
 #清除git信息
 function Delete_git {
   echo "正在清除git信息"
   sleep 3s
   find . -name ".git" | xargs rm -Rf
-}
-
-#获取主仓库更新日志
-function Git_log {
-  if [ "$diy_commit" = "" ]; then
-    echo "未设置自定义提交内容，默认拉取主仓库更新内容"
-    git log --pretty=format:"%s %cr" > $diy_logs/diy.log
-    cd $diy_logs
-    diy_commit=`head -1 diy.log`
-    echo "拉取成功"
-  else
-    echo "已设置提交内容，进行下一步"
-  fi
 }
 
 #网络协议
@@ -84,7 +82,6 @@ function Pull_diy_Third_party_warehouse {
     echo "克隆第主仓库成功"
     cd $tongbu_push
     Del_Party
-    Git_log
   else
     l=1
     while [[ l -le 3 ]]; do
@@ -94,7 +91,6 @@ function Pull_diy_Third_party_warehouse {
         echo "克隆主仓库成功"
         cd $tongbu_push
         Del_Party
-        Git_log
         return
       else
         let l++
@@ -135,6 +131,7 @@ function Git_Backup_Old {
 
 #pull函数
 function Git_Pull {
+  cd $repo_path
   git remote remove origin
   git remote add origin $pint_warehouse
   git fetch --all
@@ -165,7 +162,6 @@ function Consolidated_Warehouse {
  if [ "$pint_diy_feihebing" = "" ]; then
     echo "您已选择将所有文件合并到根目录，开始执行"
     sleep 3s
-    mkdir -p $tongbu_temp
     cp -af $repo_path/. $tongbu_temp
     cd $tongbu_temp
     Delete_git
@@ -178,11 +174,10 @@ function Consolidated_Warehouse {
       cp -rn $tongbu_temp/. $tongbu_push
     fi
     echo "合并$j号仓库成功，清理文件"
-    rm -rf $tongbu_temp
+    rm -rf $tongbu_temp/.
   else
     echo "您已选择将文件夹合并到根目录，开始执行"
     sleep 3s
-    mkdir -p $tongbu_temp/$pint_diy_feihebing
     cp -af $repo_path/. $tongbu_temp/$pint_diy_feihebing
     cd $tongbu_temp/$pint_diy_feihebing
     Delete_git
@@ -195,28 +190,19 @@ function Consolidated_Warehouse {
       cp -rn $tongbu_temp/$pint_diy_feihebing $tongbu_push
     fi
     echo "合并$j号仓库成功，清理文件"
-    rm -rf $tongbu_temp
+    rm -rf $tongbu_temp/.
   fi
 }
 
 #识别clone或者pull
 function Clone_Pull {
   echo -e "\n======================开始执行$j号仓库的拉取合并========================\n"
-  if [ ! -d "$repo_path" ];then
-    echo "文件夹不存在，创建并执行clone"
-    mkdir -p $repo_path
+  if [ ! -d "$repo_path/.git/" ];then
+    echo "执行clone"
     Git_Clone
   else
-    echo "文件夹存在，进行下一步"
-    ls -a
-    if [ ! -d "$repo_path/.git/" ];then
-      echo "执行clone"
-      Git_Clone
-    else
-      echo "执行git pull"
-      cd $repo_path
-      Git_Pull
-    fi
+    echo "执行git pull"
+    Git_Pull
   fi
   echo -e "\n========================$j号仓库的拉取合并结束========================\n"
 }
@@ -292,7 +278,6 @@ function Change_diy_party_warehouse {
 
 #合并仓库(网络仓库-RAW)
 Update_Own_Raw () {
-  mkdir -p $raw_flie
   local rm_mark
   [[ ${#OwnRawFile[*]} -gt 0 ]] && echo -e "\n=========================开始拉取raw并合并==========================\n"
   for ((i=0; i<${#OwnRawFile[*]}; i++)); do
@@ -332,18 +317,13 @@ Update_Own_Raw () {
 function Local_Change_diy_party_warehouse {
   echo -e "\n=========================开始识别并合并diy文件==========================\n"
   echo "开始合并本地文件，目标文件夹$dir_root/diy，识别为diy文件夹$config_use"
-  if [ ! -d "$dir_root/diy/$config_use" ];then
-    echo "$diy_config文件夹不存在,创建$config_use文件夹"
-    mkdir -p $diy_config
+  cd $diy_config
+  if [ "`ls -A $diy_config`" = "" ];then
+    echo "$diy_config文件夹为空文件夹，跳过合并"
   else
-    cd $diy_config
-    if [ "`ls -A $diy_config`" = "" ];then
-      echo "$diy_config文件夹为空文件夹，跳过合并"
-    else
-      echo "$diy_config文件夹已经存在，且存在文件，进行下一步"
-      cp -af $diy_config/. $tongbu_push
-      echo "合并完成"
-    fi
+    echo "$diy_config文件夹已经存在，且存在文件，进行下一步"
+    cp -af $diy_config/. $tongbu_push
+    echo "合并完成"
   fi
   echo -e "\n=========================识别并合并diy文件结束==========================\n"
 }
@@ -366,8 +346,42 @@ while [[ $n -le ${diyurl} ]]; do
   sed_use=${sed_use}s@$pint_url@123@g';'
   let n++
 done
+z=1
+while [ $z -le 1000 ]; do
+  Tmp_gu=gu$z
+  gu_Tmp=${!Tmp_gu}
+  [[ ${gu_Tmp} ]] && diygu=$z || break
+  let z++
+done
+x=1
+while [[ $x -le ${diygu} ]]; do
+  Tmp_gu=gu$x
+  gu_Tmp=${!Tmp_gu}
+  pint_gu=${gu_Tmp}
+  sed_usee=${sed_usee}$pint_gu
+  let x++
+done
+c=1
+while [ $c -le 1000 ]; do
+  Tmp_ff=ff$c
+  ff_Tmp=${!Tmp_ff}
+  [[ ${ff_Tmp} ]] && diyff=$c || break
+  let c++
+done
+v=1
+while [[ $v -le ${diyff} ]]; do
+  Tmp_ff=ff$v
+  ff_Tmp=${!Tmp_ff}
+  pint_ff=${ff_Tmp}
+  file=$pint_ff
+  let v++
+done
+
+
+
 sed -i "$sed_use" $tongbu_push/*.js
 sed -i "$sed_use" $tongbu_push/*.py
+sed -i "$sed_usee" $tongbu_push/$file
 echo -e "\n=============================替换文件内容结束==============================\n"
 }
 
@@ -381,6 +395,23 @@ function Yes_Open {
   echo -e "\n=============================项目确认完成==============================\n"
 }
 
+#获取仓库更新日志
+function Git_log {
+  if [ "$diy_commit" = "" ]; then
+    echo "未设置自定义提交内容，使用系统级识别日志"
+    grep "(?:^|\n)A.*" $submit/commit.log 2>&1 | tee $submit/A.log
+    grep "(?:^|\n)C.*" $submit/commit.log 2>&1 | tee $submit/C.log
+    grep "(?:^|\n)D.*" $submit/commit.log 2>&1 | tee $submit/D.log
+    grep "(?:^|\n)M.*" $submit/commit.log 2>&1 | tee $submit/M.log
+    grep "(?:^|\n)R.*" $submit/commit.log 2>&1 | tee $submit/R.log
+    grep "(?:^|\n)T.*" $submit/commit.log 2>&1 | tee $submit/T.log
+    grep "(?:^|\n)U.*" $submit/commit.log 2>&1 | tee $submit/U.log
+    grep "(?:^|\n)X.*" $submit/commit.log 2>&1 | tee $submit/X.log
+  else
+    echo "已设置提交内容，进行下一步"
+  fi
+}
+
 #上传文件至github
 function Push_github {
   Yes_Open
@@ -391,9 +422,10 @@ function Push_github {
     chmod -R 777 $tongbu_push
     git rm -rq --cached .
     git add .
-    git status --short 2>&1 | tee $diy_logs/commit.log
-    if test -s $diy_logs/commit.log;then
+    git status --short 2>&1 | tee $submit/commit.log
+    if test -s $submit/commit.log;then
       echo "文件存在变更，正常上传"
+      Git_log
       git config user.name "$diy_user_name"
       git config user.email "$diy_user_email"
       git commit --allow-empty -m "$diy_commit"
