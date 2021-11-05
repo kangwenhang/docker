@@ -421,28 +421,28 @@ function Git_log {
         cat $z | xargs 2>&1 | tee $z
       fi
     done
-    if [ -e "A.log" ] && [[ test -s A.log ]];then
+    if [ -e "A.log" ] && test -s A.log;then
       sed 's/^/新增：/' A.log | tee -a commit.log
     fi
-    if [ -e "C.log" ] && [[ test -s C.log ]];then
+    if [ -e "C.log" ] && test -s C.log;then
       sed 's/^/拷贝：/' C.log | tee -a commit.log
     fi
-    if [ -e "D.log" ] && [[ test -s D.log ]];then
+    if [ -e "D.log" ] && test -s D.log;then
       sed 's/^/删除：/' D.log | tee -a commit.log
     fi
-    if [ -e "M.log" ] && [[ test -s M.log ]];then
+    if [ -e "M.log" ] && test -s M.log ]];then
       sed 's/^/修改内容：/' M.log | tee -a commit.log
     fi
-    if [ -e "R.log" ] && [[ test -s R.log ]];then
+    if [ -e "R.log" ] && test -s R.log ]];then
       sed 's/^/修改文件名：/' R.log | tee -a commit.log
     fi
-    if [ -e "T.log" ] && [[ test -s T.log ]];then
+    if [ -e "T.log" ] && test -s T.log;then
       sed 's/^/文件类型修改：/' T.log | tee -a commit.log
     fi
-    if [ -e "U.log" ] && [[ test -s U.log ]];then
+    if [ -e "U.log" ] && test -s U.log;then
       sed 's/^/未合并：/' U.log | tee -a commit.log
     fi
-    if [ -e "X.log" ] && [[ test -s X.log ]];then
+    if [ -e "X.log" ] && test -s X.log;then
       sed 's/^/状态错误：/' X.log | tee -a commit.log
     fi
     diy_commit='cat commit.log'
