@@ -19,10 +19,11 @@ function Initialization {
 
 function mkdir_file_folder {
   echo -e "\n======================开始执创建必须的文件夹=======================\n"
-  mkdir -p '$raw_flie'
-  mkdir -p '$repo_path'
-  mkdir -p '$diy_config'
-  mkdir -p '$submit'
+  mkdir -p $tongbu_temp/$pint_diy_feihebing
+  mkdir -p $raw_flie
+  mkdir -p $repo_path
+  mkdir -p $diy_config
+  mkdir -p $submit
   echo -e "\n======================执创建必须的文件夹结束=======================\n"
 }
 
