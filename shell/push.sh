@@ -405,62 +405,62 @@ function Yes_Open {
 function Git_log {
   if [ "$diy_commit" = "" ]; then
     echo "未设置自定义提交内容，使用系统级识别日志"
-    grep ^[A].* $submit/commit.log | tee $submit/A.log
-    grep ^[C].* $submit/commit.log | tee $submit/C.log
-    grep ^[D].* $submit/commit.log | tee $submit/D.log
-    grep ^[M].* $submit/commit.log | tee $submit/M.log
-    grep ^[R].* $submit/commit.log | tee $submit/R.log
-    grep ^[T].* $submit/commit.log | tee $submit/T.log
-    grep ^[U].* $submit/commit.log | tee $submit/U.log
-    grep ^[X].* $submit/commit.log | $submit/tee X.log
+    grep ^[A].* $submit/commit.log 2>&1 | tee $submit/A.log
+    grep ^[C].* $submit/commit.log 2>&1 | tee $submit/C.log
+    grep ^[D].* $submit/commit.log 2>&1 | tee $submit/D.log
+    grep ^[M].* $submit/commit.log 2>&1 | tee $submit/M.log
+    grep ^[R].* $submit/commit.log 2>&1 | tee $submit/R.log
+    grep ^[T].* $submit/commit.log 2>&1 | tee $submit/T.log
+    grep ^[U].* $submit/commit.log 2>&1 | tee $submit/U.log
+    grep ^[X].* $submit/commit.log 2>&1 | tee $submit/X.log
     cat /dev/null > $submit/commit.log
     if [ -e "$submit/A.log" ] && test -s $submit/A.log;then
-      sed -e 's/[^ ]* //' $submit/A.log | tee $submit/A.log
-      sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/A.log | tee $submit/A.log
-      cat $submit/A.log | xargs | tee $submit/A.log
-      sed 's/^/新增：/' $submit/A.log | tee -a $submit/commit.log
+      sed -e 's/[^ ]* //' $submit/A.log 2>&1 | tee $submit/A.log
+      sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/A.log 2>&1 | tee $submit/A.log
+      cat $submit/A.log | xargs 2>&1 | tee $submit/A.log
+      sed 's/^/新增：/' $submit/A.log 2>&1 | tee -a $submit/commit.log
     fi
     if [ -e "$submit/C.log" ] && test -s $submit/C.log;then
-      sed -e 's/[^ ]* //' $submit/C.log | tee $submit/C.log
-      sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/C.log | tee $submit/C.log
-      cat $submit/C.log | xargs | tee $submit/C.log
-      sed 's/^/拷贝：/' $submit/C.log | tee -a $submit/commit.log
+      sed -e 's/[^ ]* //' $submit/C.log 2>&1 | tee $submit/C.log
+      sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/C.log 2>&1 | tee $submit/C.log
+      cat $submit/C.log | xargs 2>&1 | tee $submit/C.log
+      sed 's/^/拷贝：/' $submit/C.log 2>&1 | tee -a $submit/commit.log
     fi
     if [ -e "$submit/D.log" ] && test -s $submit/D.log;then
-      sed -e 's/[^ ]* //' $submit/D.log | tee $submit/D.log
-      sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/D.log | tee $submit/D.log
-      cat $submit/D.log | xargs | tee $submit/D.log
-      sed 's/^/删除：/' $submit/D.log | tee -a $submit/commit.log
+      sed -e 's/[^ ]* //' $submit/D.log 2>&1 | tee $submit/D.log
+      sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/D.log 2>&1 | tee $submit/D.log
+      cat $submit/D.log | xargs 2>&1 | tee $submit/D.log
+      sed 's/^/删除：/' $submit/D.log 2>&1 | tee -a $submit/commit.log
     fi
     if [ -e "$submit/M.log" ] && test -s $submit/M.log;then
-      sed -e 's/[^ ]* //' $submit/M.log | tee $submit/M.log
-      sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/M.log | tee $submit/M.log
-      cat $submit/M.log | xargs | tee $submit/M.log
-      sed 's/^/修改内容：/' $submit/M.log | tee -a $submit/commit.log
+      sed -e 's/[^ ]* //' $submit/M.log 2>&1 | tee $submit/M.log
+      sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/M.log 2>&1 | tee $submit/M.log
+      cat $submit/M.log | xargs 2>&1 | tee $submit/M.log
+      sed 's/^/修改内容：/' $submit/M.log 2>&1 | tee -a $submit/commit.log
     fi
     if [ -e "$submit/R.log" ] && test -s $submit/R.log;then
-      sed -e 's/[^ ]* //' $submit/R.log | tee $submit/R.log
-      sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/R.log | tee $submit/R.log
-      cat $submit/R.log | xargs | tee $submit/R.log
-      sed 's/^/修改文件名：/' $submit/R.log | tee -a $submit/commit.log
+      sed -e 's/[^ ]* //' $submit/R.log 2>&1 | tee $submit/R.log
+      sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/R.log 2>&1 | tee $submit/R.log
+      cat $submit/R.log | xargs 2>&1 | tee $submit/R.log
+      sed 's/^/修改文件名：/' $submit/R.log 2>&1 | tee -a $submit/commit.log
     fi
     if [ -e "$submit/T.log" ] && test -s $submit/T.log;then
-      sed -e 's/[^ ]* //' $submit/T.log | tee $submit/T.log
-      sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/T.log | tee $submit/T.log
-      cat $submit/T.log | xargs | tee $submit/T.log
-      sed 's/^/文件类型修改：/' $submit/T.log | tee -a $submit/commit.log
+      sed -e 's/[^ ]* //' $submit/T.log 2>&1 | tee $submit/T.log
+      sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/T.log 2>&1 | tee $submit/T.log
+      cat $submit/T.log | xargs 2>&1 | tee $submit/T.log
+      sed 's/^/文件类型修改：/' $submit/T.log 2>&1 | tee -a $submit/commit.log
     fi
     if [ -e "$submit/U.log" ] && test -s $submit/U.log;then
-      sed -e 's/[^ ]* //' $submit/U.log | tee $submit/U.log
-      sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/U.log | tee $submit/U.log
-      cat $submit/U.log | xargs | tee $submit/U.log
-      sed 's/^/未合并：/' $submit/U.log | tee -a $submit/commit.log
+      sed -e 's/[^ ]* //' $submit/U.log 2>&1 | tee $submit/U.log
+      sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/U.log 2>&1 | tee $submit/U.log
+      cat $submit/U.log | xargs 2>&1 | tee $submit/U.log
+      sed 's/^/未合并：/' $submit/U.log 2>&1 | tee -a $submit/commit.log
     fi
     if [ -e "$submit/X.log" ] && test -s $submit/X.log;then
-      sed -e 's/[^ ]* //' $submit/X.log | tee $submit/X.log
-      sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/X.log | tee $submit/X.log
-      cat $submit/X.log | xargs | tee $submit/X.log
-      sed 's/^/状态错误：/' $submit/X.log | tee -a $submit/commit.log
+      sed -e 's/[^ ]* //' $submit/X.log 2>&1 | tee $submit/X.log
+      sed '1s/^/[/;$!s/$/,/;$s/$/]/' $submit/X.log 2>&1 | tee $submit/X.log
+      cat $submit/X.log | xargs 2>&1 | tee $submit/X.log
+      sed 's/^/状态错误：/' $submit/X.log 2>&1 | tee -a $submit/commit.log
     fi
     diy_commit=$(cat $submit/commit.log)
   else
