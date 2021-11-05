@@ -19,11 +19,11 @@ function Initialization {
 
 function mkdir_file_folder {
   echo -e "\n======================开始执创建必须的文件夹=======================\n"
-  mkdir -p $tongbu_temp/$pint_diy_feihebing
-  mkdir -p $raw_flie
-  mkdir -p $repo_path
-  mkdir -p $diy_config
-  mkdir -p $submit
+  mkdir -pv $tongbu_temp
+  mkdir -pv $raw_flie
+  mkdir -pv $repo_path
+  mkdir -pv $diy_config
+  mkdir -pv $submit
   echo -e "\n======================执创建必须的文件夹结束=======================\n"
 }
 
@@ -179,6 +179,7 @@ function Consolidated_Warehouse {
   else
     echo "您已选择将文件夹合并到根目录，开始执行"
     sleep 3s
+    mkdir $tongbu_temp/$pint_diy_feihebing
     cp -af $repo_path/. $tongbu_temp/$pint_diy_feihebing
     cd $tongbu_temp/$pint_diy_feihebing
     Delete_git
