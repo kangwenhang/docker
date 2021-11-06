@@ -361,8 +361,7 @@ function Diy_Replace {
     Tmp_find=find$n
     find_Tmp=${!Tmp_find}
     pint_find=${find_Tmp}
-    echo "find $tongbu_push -type f ${pint_find} | xargs sed -i "${pint_sed}""
-    find $tongbu_push -type f ${pint_find} | xargs sed -i "${pint_sed}"
+    find ./ -type f ${pint_find}|xargs sed -i "${pint_sed}"
     let n++
   done
 echo -e "\n=============================替换文件内容结束==============================\n"
@@ -382,9 +381,10 @@ function Yes_Open {
 
 #上传文件至github
 function Push_github {
+  cd $tongbu_push
+  Diy_Replace
   Yes_Open
   echo -e "\n===========================开始上传文件至网端==========================\n"
-  cd $tongbu_push
   if [ -e "model" ];then
     echo "确认文件夹存在"
     chmod -R 777 $tongbu_push
@@ -443,7 +443,6 @@ Count_diy_party_warehouse
 Change_diy_party_warehouse
 Update_Own_Raw
 Local_Change_diy_party_warehouse
-Diy_Replace
 Push_github
 echo "运行结束，退出"
 exit
