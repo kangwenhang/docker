@@ -350,7 +350,7 @@ function Diy_Replace {
   while [ $m -le 1000 ]; do
     Tmp_sed=sed$m
     sed_Tmp=${!Tmp_sed}
-    [[ ${url_sed} ]] && diyurl=$m || break
+    [[ ${sed_Tmp} ]] && diyurl=$m || break
     let m++
   done
   n=1
@@ -363,8 +363,8 @@ function Diy_Replace {
     pint_find=${find_Tmp}
     let n++
   done
-  echo "find $tongbu_push -type f $pint_find -exec sed -i $pint_sed {} \;"
-  find $tongbu_push -type f $pint_find -exec sed -i $pint_sed {} \;
+  echo "find $tongbu_push -type f ${pint_find} -exec sed -i ${pint_sed} {} \;"
+  find $tongbu_push -type f ${pint_find} -exec sed -i ${pint_sed} {} \;
 echo -e "\n=============================替换文件内容结束==============================\n"
 }
 
