@@ -28,7 +28,3 @@ tongbu_temp=$tongbu/temp
 file_config=$config/$config_use/config.sh
 file_diyreplace=$config/$config_use/diyreplace.sh
 file_gitignore=$config/$config_use/.gitignore
-
-#调用
-source $file_diyreplace
-source $file_config

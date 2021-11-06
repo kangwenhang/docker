@@ -4,6 +4,7 @@
 config_use=config"$1"
 diyreplace_use=diyreplace"$1"
 source /push/shell/share.sh
+source $file_config
 
 ##运行脚本
 mkdir -p $diy_logs

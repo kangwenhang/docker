@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
 ## 导入通用变量与函数
-repo_docker=$dir_root/repo/docker
-shell_model=${dir_root}/shell/model
-logs=${dir_root}/logs
+source /push/shell/share.sh
 
 function Git_Off_True {
   echo -e "更新完成，更新文件并提升权限"

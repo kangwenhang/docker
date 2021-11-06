@@ -2,6 +2,7 @@
 
 #变量判定
 source /push/shell/share.sh
+source $file_config
 
 #前置
 function Initialization {
@@ -346,24 +347,25 @@ function Local_Change_diy_party_warehouse {
 #替换文件内容(仅替换互助码)
 function Diy_Replace {
   echo -e "\n=============================开始替换文件内容==============================\n"
-  m=1
-  while [ $m -le 1000 ]; do
-    Tmp_sed=sed$m
-    sed_Tmp=${!Tmp_sed}
-    [[ ${sed_Tmp} ]] && diyurl=$m || break
-    let m++
-  done
-  n=1
-  while [[ $n -le ${diyurl} ]]; do
-    Tmp_sed=sed$n
-    sed_Tmp=${!Tmp_sed}
-    pint_sed=${sed_Tmp}
-    Tmp_find=find$n
-    find_Tmp=${!Tmp_find}
-    pint_find=${find_Tmp}
-    find ./ -type f ${pint_find}|xargs sed -i "${pint_sed}"
-    let n++
-  done
+#  m=1
+#  while [ $m -le 1000 ]; do
+#    Tmp_sed=sed$m
+#    sed_Tmp=${!Tmp_sed}
+#    [[ ${sed_Tmp} ]] && diyurl=$m || break
+#    let m++
+#  done
+#  n=1
+#  while [[ $n -le ${diyurl} ]]; do
+#    Tmp_sed=sed$n
+#    sed_Tmp=${!Tmp_sed}
+#    pint_sed=${sed_Tmp}
+#    Tmp_find=find$n
+#    find_Tmp=${!Tmp_find}
+#    pint_find=${find_Tmp}
+#    find ./ -type f ${pint_find}|xargs sed -i "${pint_sed}"
+#    let n++
+#  done
+source $file_diyreplace
 echo -e "\n=============================替换文件内容结束==============================\n"
 }
 
