@@ -361,8 +361,8 @@ function Diy_Replace {
     Tmp_find=find$n
     find_Tmp=${!Tmp_find}
     pint_find=${find_Tmp}
-    echo "find $tongbu_push -type f ${pint_find} -exec sed -i ${pint_sed} {} \;"
-    find $tongbu_push -type f ${pint_find} -exec sed -i ${pint_sed} {} \;
+    echo "find $tongbu_push -type f ${pint_find} -exec sed -i "${pint_sed}" {} \;"
+    find $tongbu_push -type f ${pint_find} -exec sed -i "${pint_sed}" {} \;
     let n++
   done
 echo -e "\n=============================替换文件内容结束==============================\n"
