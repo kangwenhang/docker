@@ -365,8 +365,8 @@ function Diy_Replace {
 #    find ./ -type f ${pint_find}|xargs sed -i "${pint_sed}"
 #    let n++
 #  done
-source $file_diyreplace
-echo -e "\n=============================替换文件内容结束==============================\n"
+  source $file_diyreplace
+  echo -e "\n=============================替换文件内容结束==============================\n"
 }
 
 #确认项目
