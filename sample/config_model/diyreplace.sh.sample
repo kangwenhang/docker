@@ -1,37 +1,7 @@
 #自定义替换
+#find已添加默认参数-type f 【sed -i】
 
-  url1='transfer.nz.lu'
-  url2='Aaron-lv'
-  url3='star261'
-  url4='KingRan'
-  url5='shufflewzc'
-  url6='yuannian1112'
-  url7='dongge'
-  url8='zero205'
-  url9='star267'
-  url10='lsh26'
-  url11='hz.zzf.red'
-  
-  
-  gu1='35,38c \ '
-  ff1='jd_fruit.js'
-  gu2='33,36c \ '
-  ff2='jd_pet.js'
-  gu3='36,39c \ '
-  ff3='jd_plantBean.js'
-  gu4='46,49c \ '
-  ff4='jd_dreamFactory.js'
-  gu5='47d'
-  ff5='jd_jdfactory.js'
-  gu6='43,44c \ '''
-  ff6='jd_jdzz.js'
-  gu7='33,34c \ '
-  ff7='jd_bookshop.js'
-  gu8='34,35c \ '
-  ff8='jd_cash.js'
-  gu9='28,29c \ '
-  ff9='jd_sgmh.js'
-  gu10='58d'
-  ff10='jd_HongBao.js'
+find1="-name "*.js" -a -name "*.py""
+sed1='s@Aaron-lv@123@g;s@star261@123@g;'
 
   

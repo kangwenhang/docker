@@ -345,58 +345,25 @@ function Local_Change_diy_party_warehouse {
 
 #替换文件内容(仅替换互助码)
 function Diy_Replace {
-echo -e "\n=============================开始替换文件内容==============================\n"
-m=1
-while [ $m -le 1000 ]; do
-  Tmp_url=url$m
-  url_Tmp=${!Tmp_url}
-  [[ ${url_Tmp} ]] && diyurl=$m || break
-  let m++
-done
-n=1
-while [[ $n -le ${diyurl} ]]; do
-  Tmp_url=url$n
-  url_Tmp=${!Tmp_url}
-  pint_url=${url_Tmp}
-  sed_use=${sed_use}s@$pint_url@123@g';'
-  let n++
-done
-z=1
-while [ $z -le 1000 ]; do
-  Tmp_gu=gu$z
-  gu_Tmp=${!Tmp_gu}
-  [[ ${gu_Tmp} ]] && diygu=$z || break
-  let z++
-done
-x=1
-while [[ $x -le ${diygu} ]]; do
-  Tmp_gu=gu$x
-  gu_Tmp=${!Tmp_gu}
-  pint_gu=${gu_Tmp}
-  sed_usee=${sed_usee}$pint_gu
-  let x++
-done
-c=1
-while [ $c -le 1000 ]; do
-  Tmp_ff=ff$c
-  ff_Tmp=${!Tmp_ff}
-  [[ ${ff_Tmp} ]] && diyff=$c || break
-  let c++
-done
-v=1
-while [[ $v -le ${diyff} ]]; do
-  Tmp_ff=ff$v
-  ff_Tmp=${!Tmp_ff}
-  pint_ff=${ff_Tmp}
-  file=$pint_ff
-  let v++
-done
-
-
-
-sed -i "$sed_use" $tongbu_push/*.js
-sed -i "$sed_use" $tongbu_push/*.py
-sed -i "$sed_usee" $tongbu_push/$file
+  echo -e "\n=============================开始替换文件内容==============================\n"
+  m=1
+  while [ $m -le 1000 ]; do
+    Tmp_url=url$m
+    url_Tmp=${!Tmp_url}
+    [[ ${url_Tmp} ]] && diyurl=$m || break
+    let m++
+  done
+  n=1
+  while [[ $n -le ${diyurl} ]]; do
+    Tmp_sed=sed$n
+    sed_Tmp=${!Tmp_sed}
+    pint_sed=${sed_Tmp}
+    Tmp_find=find$n
+    find_Tmp=${!Tmp_find}
+    pint_find=${find_Tmp}
+    let n++
+  done
+  find $tongbu_push -type f $pint_find -exec sed -i $pint_sed {} \;
 echo -e "\n=============================替换文件内容结束==============================\n"
 }
 
