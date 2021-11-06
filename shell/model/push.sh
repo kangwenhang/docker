@@ -348,9 +348,9 @@ function Diy_Replace {
   echo -e "\n=============================开始替换文件内容==============================\n"
   m=1
   while [ $m -le 1000 ]; do
-    Tmp_url=url$m
-    url_Tmp=${!Tmp_url}
-    [[ ${url_Tmp} ]] && diyurl=$m || break
+    Tmp_sed=sed$m
+    sed_Tmp=${!Tmp_sed}
+    [[ ${url_sed} ]] && diyurl=$m || break
     let m++
   done
   n=1
