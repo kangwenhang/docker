@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
 ## 导入通用变量与函数
-config_use=config"$1"
 diyreplace_use=diyreplace"$1"
 source /push/shell/share.sh
-source $file_config
 
 ##运行脚本
 function run_sh {
@@ -24,10 +22,15 @@ function run_sh_sd {
 
 
 if [[ $1 == sd ]]; then
-    config_use="config"
+    config_use=config
+    source $file_config
     run_sh_sd
 elif [[ $2 == sd ]]; then
+    config_use=config"$1"
+    source $file_config
     run_sh_sd $1
 else
+    config_use=config"$1"
+    source $file_config
     run_sh $1
 fi
