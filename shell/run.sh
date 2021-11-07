@@ -22,8 +22,7 @@ function run_sh_sd {
 
 
 if [[ $1 == sd ]]; then
-    config_use=config
-    source $file_config
+    source /push/config/config/config.sh
     run_sh_sd
 elif [[ $2 == sd ]]; then
     config_use=config"$1"
