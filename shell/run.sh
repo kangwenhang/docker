@@ -4,7 +4,7 @@
 function input_can {
   config_use=config"$1"
   diyreplace_use=diyreplace"$1"
-  source $file_config
+  source /push/config/$config_use/config.sh
 }
 
 ##运行脚本
