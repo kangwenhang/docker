@@ -42,3 +42,29 @@ elif [[ $2 == sd ]]; then
 else
     run_sh $1
 fi
+
+case $# in
+  0)
+    echo -e "==============================帮助==================================="
+    help
+  1)
+    if [ "$1" -gt 0 ] 2>/dev/null; then
+      run_sh $1
+    else
+      echo -e "\n命令输入错误...\n"
+      Help
+    fi
+    ;;
+  2)
+    if [[ $2 == sd ]]; then
+      run_sh_sd $1
+    else
+      echo -e "\n命令输入错误...\n"
+      Help
+    fi
+    ;;
+  *)
+    echo -e "\n命令过多...\n"
+    Help
+    ;;
+esac
