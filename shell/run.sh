@@ -42,6 +42,8 @@ case $# in
   2)
     if [[ $2 == sd ]]; then
       run_sh_sd $1
+    elif [[ $2 == "" ]]; then
+      run_sh $1
     else
       echo -e "\n命令输入错误...\n"
       Help
