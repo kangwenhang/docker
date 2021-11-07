@@ -9,16 +9,16 @@ function input_can {
 
 ##运行脚本
 function run_sh {
-  input_can $1
   source /push/shell/share.sh
+  input_can $1
   mkdir -p $diy_logs
   source $shell_model/push.sh 2>&1 | tee $log_path
   exit
 }
 
 function run_sh_sd {
-  input_can $1
   source /push/shell/share_sd.sh
+  input_can $1
   cp -rf $config/crontab.list $config/crontab.list.back
   awk '{print "#"$0}' $config/crontab.list > /dev/null 2>&1
   mkdir -p $diy_logs
