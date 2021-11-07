@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source $file_config
+
 #前置
 function Initialization {
   if [ ! -d "$tongbu_push" ];then

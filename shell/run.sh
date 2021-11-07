@@ -12,7 +12,7 @@ function run_sh {
   source /push/shell/share.sh
   input_can $1
   mkdir -p $diy_logs
-  source $shell_model/push.sh 2>&1 | tee $log_path
+  source $shell_model/push.sh $1 2>&1 | tee $log_path
   exit
 }
 
@@ -20,7 +20,7 @@ function run_sh_sd {
   source /push/shell/share_sd.sh
   input_can $1
   mkdir -p $diy_logs
-  source $shell_model/push.sh 2>&1 | tee $log_path
+  source $shell_model/push.sh $1 2>&1 | tee $log_path
   cp -rf $config/crontab.list.back $config/crontab.list
   exit
 }
