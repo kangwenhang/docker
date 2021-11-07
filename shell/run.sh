@@ -32,7 +32,7 @@ case $# in
     Help
     ;;
   1)
-    if [ "$1" -gt 0 ] 2>/dev/null; then
+    if [[ "$1" =~ ^(-?|\+?)[0-9]+(\.?[0-9]+)?$ ]]; then
       run_sh $1
     else
       echo -e "\n命令输入错误...\n"
