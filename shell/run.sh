@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 ## 导入通用变量与函数
-  config_use=config"$1"
-  diyreplace_use=diyreplace"$1"
+config_use=config"$1"
+diyreplace_use=diyreplace"$1"
 
 ##运行脚本
 function run_sh {
