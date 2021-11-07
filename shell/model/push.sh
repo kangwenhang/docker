@@ -381,10 +381,10 @@ function Yes_Open {
 
 #上传文件至github
 function Push_github {
-  cd $tongbu_push
   Diy_Replace
   Yes_Open
   echo -e "\n===========================开始上传文件至网端==========================\n"
+  cd $tongbu_push
   if [ -e "model" ];then
     echo "确认文件夹存在"
     chmod -R 777 $tongbu_push
