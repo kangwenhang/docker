@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-#变量判定
-source /push/shell/share.sh
-source $file_config
-
 #前置
 function Initialization {
   if [ ! -d "$tongbu_push" ];then

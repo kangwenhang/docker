@@ -25,7 +25,7 @@ function run_sh_sd {
   exit
 }
 
-function help {
+function Help {
   echo -e "本脚本的用法为："
   echo -e "1. bash run.sh           # 查看帮助"
   echo -e "2. bash run.sh 数字      # 运行confing+数字脚本（手动【不建议】运行此项）"
@@ -35,10 +35,10 @@ function help {
 case $# in
   0)
     echo -e "==============================帮助==================================="
-    help
+    Help
     ;;
   1)
-    if [ "$1" -gt 0 ] 2>/dev/null && [ "$2" == "" ]; then
+    if [ "$1" -gt 0 ] 2>/dev/null; then
       run_sh $1
     else
       echo -e "\n命令输入错误...\n"
@@ -55,6 +55,6 @@ case $# in
     ;;
   *)
     echo -e "\n命令过多...\n"
-    Help
+  Help
     ;;
 esac
