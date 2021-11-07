@@ -16,7 +16,7 @@ function run_sh {
 function run_sh_sd {
   source $file_config
   cp -rf $config/crontab.list $config/crontab.list.back
-  awk '{print "#"$0}' $config/crontab.list
+  awk '{print "#"$0}' $config/crontab.list > /dev/null 2>&1
   mkdir -p $diy_logs
   source $shell_model/push.sh 2>&1 | tee $log_path
   cp -rf $config/crontab.list.back $config/crontab.list
