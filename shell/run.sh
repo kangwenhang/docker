@@ -19,8 +19,6 @@ function run_sh {
 function run_sh_sd {
   source /push/shell/share_sd.sh
   input_can $1
-  cp -rf $config/crontab.list $config/crontab.list.back
-  awk '{print "#"$0}' $config/crontab.list > /dev/null 2>&1
   mkdir -p $diy_logs
   source $shell_model/push.sh 2>&1 | tee $log_path
   cp -rf $config/crontab.list.back $config/crontab.list
@@ -40,7 +38,7 @@ case $# in
     help
     ;;
   1)
-    if [ "$1" -gt 0 ] 2>/dev/null; then
+    if [ "$1" -gt 0 ] 2>/dev/null && [ "$2" == "" ]; then
       run_sh $1
     else
       echo -e "\n命令输入错误...\n"
