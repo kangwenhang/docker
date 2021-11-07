@@ -25,7 +25,7 @@ function run_sh_sd {
 
 
 if [[ $1 == sd ]]; then
-    config_use=config
+    $1=""
     run_sh_sd
 elif [[ $2 == sd ]]; then
     run_sh_sd $1
