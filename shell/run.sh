@@ -55,6 +55,6 @@ case $# in
     ;;
   *)
     echo -e "\n命令过多...\n"
-  Help
+    Help
     ;;
 esac
