@@ -27,9 +27,11 @@ case $# in
     echo
   1)
     if [[ $1 == sd ]]; then
-      run_sh_sd $1
+      config_use=config
+      run_sh_sd
     else
-      run_sh $1
+      config_use=config
+      run_sh
     fi
     ;;
   2)
