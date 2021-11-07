@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
 ## 导入通用变量与函数
-diyreplace_use=diyreplace"$1"
-source /push/shell/share.sh
+function input_can {
+  config_use=config"$1"
+  diyreplace_use=diyreplace"$1"
+  source /push/shell/share.sh
+  source $file_config
+}
 
 ##运行脚本
 function run_sh {
@@ -20,16 +24,21 @@ function run_sh_sd {
   exit
 }
 
+function help {
+  echo -e "本脚本的用法为："
+  echo -e "1. bash run.sh           # 查看帮助"
+  echo -e "2. bash run.sh 数字      # 运行confing+数字脚本（手动【不建议】运行此项）"
+  echo -e "3. bash run.sh 数字 sd   # 运行confing+数字脚本（手动【建议】运行此项）"
+}
 
-if [[ $1 == sd ]]; then
-    source /push/config/config/config.sh
-    run_sh_sd
+
+if [[ $1 == "" ]]; then
+    echo -e "==============================帮助==================================="
+    help
 elif [[ $2 == sd ]]; then
-    config_use=config"$1"
-    source $file_config
+    input_can
     run_sh_sd $1
 else
-    config_use=config"$1"
-    source $file_config
+    input_can
     run_sh $1
 fi
