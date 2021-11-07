@@ -1,27 +1,21 @@
 #!/usr/bin/env bash
 
 ## 导入通用变量与函数
-function input_can {
   config_use=config"$1"
   diyreplace_use=diyreplace"$1"
-  source /push/config/$config_use/config.sh
-}
 
 ##运行脚本
 function run_sh {
   source /push/shell/share.sh
-  input_can $1
   mkdir -p $diy_logs
-  source $shell_model/push.sh $1 2>&1 | tee $log_path
+  source $shell_model/push.sh 2>&1 | tee $log_path
   exit
 }
 
 function run_sh_sd {
   source /push/shell/share_sd.sh
-  input_can $1
   mkdir -p $diy_logs
-  source $shell_model/push.sh $1 2>&1 | tee $log_path
-  cp -rf $config/crontab.list.back $config/crontab.list
+  source $shell_model/push.sh 2>&1 | tee $log_path
   exit
 }
 
