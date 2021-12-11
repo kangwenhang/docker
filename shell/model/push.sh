@@ -265,7 +265,7 @@ function Count_diy_party_warehouse {
 function Change_diy_party_warehouse {
   h=${diySum}
   for ((j=1; j<=$h; j++)); do
-    for num in ${TempBlockCookie}; do
+    for num in ${TempBlockwarehouse}; do
       if [[ $j -eq $num ]]; then
         continue 2
       fi
