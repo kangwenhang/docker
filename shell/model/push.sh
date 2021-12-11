@@ -265,7 +265,7 @@ function Count_diy_party_warehouse {
 function Change_diy_party_warehouse {
   j=1
   h=${diySum}
-  while [[ j -le h ]]; do
+  while [[ $j -le $h ]]; do
     for $j in ${TempBlockwarehouse}; do
       let j++
       break
