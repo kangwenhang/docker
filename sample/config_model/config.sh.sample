@@ -19,6 +19,10 @@ autocrlf=""
 ##fugai即是否覆盖同名文件，不填写或者1为强制覆盖，0为不覆盖
 ###重命名文件及文件夹（rename_name请填写正则【替换的内容】--注意：【单引号】，rename_file填写要正则【替换的文件】）
 ####若需要增加仓库，请按序号进行添加
+#####屏蔽仓库
+# 举例：TempBlockwarehouse="2 4"  屏蔽掉仓库2和仓库4
+
+TempBlockwarehouse=""
 
 #示例
 # diy_party_warehouse_branch1="diy"

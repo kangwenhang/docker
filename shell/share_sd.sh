@@ -15,7 +15,7 @@ submit=$diy_logs/sd/submit
 
 #push专用变量
 diy_config=$dir_root/diy/$config_use
-dir_repo=$dir_root/repo
+dir_repo=$dir_root/repo/$config_use
 dir_backup=$dir_root/backup
 dir_backup_raw=$dir_backup/raw
 old_backup=$dir_backup/old
