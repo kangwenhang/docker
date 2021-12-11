@@ -31,6 +31,7 @@ function mkdir_file_folder {
   mkdir -p $raw_flie
   mkdir -p $diy_config
   mkdir -p $submit
+  mkdir -p $dir_repo
   echo "执创建必须的文件夹结束"
 }
 
