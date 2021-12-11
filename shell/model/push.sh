@@ -263,9 +263,10 @@ function Count_diy_party_warehouse {
 
 #合并仓库(网络仓库)
 function Change_diy_party_warehouse {
+  j=1
   h=${diySum}
-  for ((j=1; j<=$h; j++)); do
-    for j in ${TempBlockwarehouse}; do
+  while [[ j -le h ]]; do
+    for $j in ${TempBlockwarehouse}; do
       let j++
       break
     done 
