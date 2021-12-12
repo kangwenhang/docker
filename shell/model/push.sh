@@ -291,7 +291,6 @@ function Change_diy_party_warehouse {
     get_uniq_path "$pint_warehouse" "$pint_branch"
     local repo_path="${dir_repo}/${uniq_path}"
     Clone_Pull
-    let j++
   done
 }
 
