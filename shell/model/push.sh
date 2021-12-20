@@ -89,7 +89,7 @@ function Pull_diy_Third_party_warehouse {
   echo "正在克隆主仓库"
   git clone -b $diy_branch ${github_proxy_url}https://$diy_url $tongbu_push
   if [ $? = 0 ]; then
-    echo "克隆第主仓库成功"
+    echo "克隆主仓库成功"
     cd $tongbu_push
     Del_Party
   else
@@ -207,6 +207,7 @@ function Consolidated_Warehouse {
       rm -rf $n >/dev/null 2>&1
     done
   fi
+  ls -a $tongbu_push
 }
 
 #识别clone或者pull
