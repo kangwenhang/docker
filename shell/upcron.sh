@@ -31,10 +31,5 @@ do
         creatmd5
         crontab ${ListCron}
     fi
-    if [ -s ${dir_root}/model ]
-        rm -rf model
-    else
-        echo "完美"
-    fi
     sleep 2s
 done
