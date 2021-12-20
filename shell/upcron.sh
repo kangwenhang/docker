@@ -36,4 +36,5 @@ do
     else
         echo "完美"
     fi
+    sleep 2s
 done
