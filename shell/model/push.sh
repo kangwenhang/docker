@@ -147,7 +147,6 @@ function Git_Pull {
   git fetch --all
   ExitStatusShell=$?
   git reset --hard origin/$pint_branch
-  git pull
   if [ $? = 0 ] && [ $ExitStatusShell = 0 ]; then
     Git_Backup
   else
