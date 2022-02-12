@@ -427,14 +427,17 @@ function Push_github {
           else
             let k++
           fi
+          echo -e "\n===========================上传文件至网端结束==========================\n"
         done
         echo "上传失败，正在恢复文件"
         Initialization
       fi
+      echo -e "\n===========================上传文件至网端结束==========================\n"
     else
       echo "无文件变更，取消上传，跳出并恢复文件"
       Initialization
     fi
+    echo -e "\n===========================上传文件至网端结束==========================\n"
   else
     echo "文件夹错误，取消上传"
     Initialization
