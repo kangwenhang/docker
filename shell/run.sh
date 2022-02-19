@@ -21,9 +21,9 @@ function run_sh_sd {
 
 function Help {
   echo -e "本脚本的用法为："
-  echo -e "1. bash run.sh           # 查看帮助"
-  echo -e "2. bash run.sh 数字      # 运行confing+数字脚本（手动【不建议】运行此项）"
-  echo -e "3. bash run.sh 数字 sd   # 运行confing+数字脚本（手动【建议】运行此项）"
+  echo -e "1. bash /push/shell/run.sh           # 查看帮助"
+  echo -e "2. bash /push/shell/run.sh 数字      # 运行confing+数字脚本（手动【不建议】运行此项）"
+  echo -e "3. bash /push/shell/run.sh 数字 sd   # 运行confing+数字脚本（手动【建议】运行此项）"
 }
 
 case $# in

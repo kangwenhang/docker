@@ -81,6 +81,12 @@ function Del_Party {
   done
 }
 
+#确认项目
+function Yes_Open {
+  echo "拷贝确认文件"
+  cp -fv $dir_root/sample/model.sample $tongbu_push/model
+}
+
 #主仓库(网络仓库)
 function Pull_diy_Third_party_warehouse {
   Initialization
@@ -92,6 +98,7 @@ function Pull_diy_Third_party_warehouse {
     echo "克隆主仓库成功"
     cd $tongbu_push
     Del_Party
+    Yes_Open
   else
     l=1
     while [[ l -le 3 ]]; do
@@ -101,6 +108,7 @@ function Pull_diy_Third_party_warehouse {
         echo "克隆主仓库成功"
         cd $tongbu_push
         Del_Party
+        Yes_Open
         return
       else
         let l++
@@ -292,6 +300,15 @@ function Change_diy_party_warehouse {
     get_uniq_path "$pint_warehouse" "$pint_branch"
     local repo_path="${dir_repo}/${uniq_path}"
     Clone_Pull
+    cd $tongbu_push
+    ls -a
+    if [ -e "model" ];then
+      echo "确认文件存在，继续执行拉库命令"
+    else
+      echo "文件存在异常，清除缓存并停止整个上传动作"
+      Initialization
+      exit
+    fi
   done
 }
 
@@ -370,29 +387,18 @@ function Diy_Replace {
 #  done
   cd $tongbu_push
   source $file_diyreplace
-  echo -e "\n=============================替换文件内容结束==============================\n"
-}
-
-#确认项目
-function Yes_Open {
-  echo -e "\n=============================项目最终确认==============================\n"
-  echo "拷贝确认文件"
-  cp -fv $dir_root/sample/model.sample $tongbu_push/model
   echo "拷贝.gitignore，黑白名单请填写 $file_gitignore 中的内容"
   cp -rfv $file_gitignore $tongbu_push
-  echo -e "\n=============================项目确认完成==============================\n"
+  echo -e "\n=============================替换文件内容结束==============================\n"
 }
-
-
 
 #上传文件至github
 function Push_github {
   Diy_Replace
-  Yes_Open
   echo -e "\n===========================开始上传文件至网端==========================\n"
   cd $tongbu_push
   if [ -e "model" ];then
-    echo "确认文件夹存在"
+    echo "确认文件存在"
     chmod -R 777 $tongbu_push
     git rm -rq --cached .
     git add .
