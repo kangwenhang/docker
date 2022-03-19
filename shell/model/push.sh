@@ -301,7 +301,6 @@ function Change_diy_party_warehouse {
     local repo_path="${dir_repo}/${uniq_path}"
     Clone_Pull
     cd $tongbu_push
-    ls -a
     if [ -e "model" ];then
       echo "确认文件存在，继续执行拉库命令"
     else
