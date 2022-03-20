@@ -215,7 +215,6 @@ function Consolidated_Warehouse {
       rm -rf $n >/dev/null 2>&1
     done
   fi
-  ls -a $tongbu_push
 }
 
 #识别clone或者pull
