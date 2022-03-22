@@ -4,21 +4,21 @@ source $file_config
 
 #前置
 function Initialization {
-  if [ ! -d "$tongbu_push" ];then
+  if [ ! -d "$tongbu_push" ]; then
     echo "$tongbu_push不存在，跳过清理"
   else
     echo "开始清理上传仓库$tongbu_push"
     cd $tongbu_push
-    for n in `ls -a`;do
+    for n in `ls -a`; do
       rm -rf $n >/dev/null 2>&1
     done
   fi
-  if [ ! -d "$submit" ];then
+  if [ ! -d "$submit" ]; then
     echo "$submit文件夹不存在，跳过清理"
   else
     echo "开始清理上传日志$submit"
     cd $submit
-    for y in `ls -a`;do
+    for y in `ls -a`; do
       rm -rf $y >/dev/null 2>&1
     done
   fi
@@ -40,6 +40,39 @@ function Delete_git {
   echo "正在清除git信息"
   sleep 3s
   find . -name ".git" | xargs rm -Rf
+}
+
+#加载代理
+function socks_git_set {
+  echo "==============开始加载代理================"
+  if [ "$sock5_diy" = "" ]; then
+    echo "不设置代理，以默认方式执行脚本"
+  else
+    if [ ! "$sock5_diy" = "" ] && [ "$http_proxy" = "" -o "$http_proxy" = "global" ]; then
+      echo "设置为git全局代理"
+      git config --global http.proxy "socks5://$sock5_diy"
+      git config --global https.proxy "socks5://$sock5_diy"
+    elif [ ! "$sock5_diy" = "" ] && [ "$http_proxy" = "push" ]; then
+      echo "设置为仅上传使用代理"
+      push_diy=1
+    elif [ ! "$sock5_diy" = "" ] && [ ! "$http_proxy" = "" ]; then
+      echo "设置为指定地址模式" 
+      git config --global http.$http_proxy.proxy socks5://$sock5_diy
+    fi
+  fi
+  echo "==============加载代理结束================"
+}
+
+#取消代理
+function socks_git_unset {
+  echo "==============开始取消代理================"
+  if [ ! "$sock5_diy" = "" ] && [ "$http_proxy" = "" -o "$http_proxy" = "global" -o "$http_proxy" = "push" ]; then
+    git config --global --unset http.proxy
+    git config --global --unset https.proxy
+  elif [ ! "$sock5_diy" = "" ] && [ ! "$http_proxy" = "" ]; then
+    git config --global --unset http.$http_proxy.proxy
+  fi
+  echo "==============取消代理结束================"
 }
 
 #网络协议
@@ -74,8 +107,8 @@ function Script_Pre {
 
 #清除库内容
 function Del_Party {
-  for m in `ls`;do
-    if [ "$m" != .git ];then
+  for m in `ls`; do
+    if [ "$m" != .git ]; then
       rm -rf $m
     fi
   done
@@ -124,7 +157,7 @@ function Pull_diy_Third_party_warehouse {
 #备份仓库
 function Git_Backup {
   echo "克隆(更新)$j号仓库成功，开始备份仓库内容"
-  if [ ! -d "$dir_backup/${uniq_path}" ];then
+  if [ ! -d "$dir_backup/${uniq_path}" ]; then
     cp -af $repo_path $dir_backup
   else
     rsync -a $dir_backup/${uniq_path} $old_backup
@@ -137,7 +170,7 @@ function Git_Backup {
 
 function Git_Backup_Old {
   echo "克隆(更新)$j号仓库失败，使用备份文件"
-  if [ ! -d "$dir_backup/${uniq_path}" ];then
+  if [ ! -d "$dir_backup/${uniq_path}" ]; then
     echo "无备份文件，跳过此库"
   else
     cp -af $dir_backup/${uniq_path}/. $repo_path
@@ -192,7 +225,7 @@ function Consolidated_Warehouse {
       cp -rn $tongbu_temp/. $tongbu_push
     fi
     echo "合并$j号仓库成功，清理文件"
-    for n in `ls -a`;do
+    for n in `ls -a`; do
       rm -rf $n >/dev/null 2>&1
     done
   else
@@ -211,7 +244,7 @@ function Consolidated_Warehouse {
       cp -rn $tongbu_temp/$pint_diy_feihebing $tongbu_push
     fi
     echo "合并$j号仓库成功，清理文件"
-    for n in `ls -a`;do
+    for n in `ls -a`; do
       rm -rf $n >/dev/null 2>&1
     done
   fi
@@ -220,7 +253,7 @@ function Consolidated_Warehouse {
 #识别clone或者pull
 function Clone_Pull {
   echo -e "\n======================开始执行$j号仓库的拉取合并========================\n"
-  if [ ! -d "$repo_path/.git/" ];then
+  if [ ! -d "$repo_path/.git/" ]; then
     echo "执行clone"
     Git_Clone
   else
@@ -300,7 +333,7 @@ function Change_diy_party_warehouse {
     local repo_path="${dir_repo}/${uniq_path}"
     Clone_Pull
     cd $tongbu_push
-    if [ -e "model" ];then
+    if [ -e "model" ]; then
       echo "确认文件存在，继续执行拉库命令"
     else
       echo "文件存在异常，清除缓存并停止整个上传动作"
@@ -395,13 +428,13 @@ function Push_github {
   Diy_Replace
   echo -e "\n===========================开始上传文件至网端==========================\n"
   cd $tongbu_push
-  if [ -e "model" ];then
+  if [ -e "model" ]; then
     echo "确认文件存在"
     chmod -R 777 $tongbu_push
     git rm -rq --cached .
     git add .
     source $shell_model/status.sh > $submit/1.log
-    if test -s $submit/commit.log;then
+    if test -s $submit/commit.log; then
       echo "文件存在变更，正常上传"
       source $shell_model/submit.sh > $submit/1.log
       git config user.name "$diy_user_name"
@@ -414,10 +447,16 @@ function Push_github {
       git config --global http.lowSpeedTime 60
       git config --global http.postBuffer 524288000
       git config --global http.sslVerify "false"
+      if [ "$push_diy" = "1" ]; then
+        git config --global http.proxy "socks5://$sock5_diy"
+        git config --global https.proxy "socks5://$sock5_diy"
+      fi
       git push --force "https://$diy_user_name:$github_api@$diy_url" HEAD:$diy_branch
       if [ $? = 0 ]; then
         echo "上传成功"
         Initialization
+        echo -e "\n===========================上传文件至网端结束==========================\n"
+        return
       else
         k=1
         while [[ k -le 3 ]]; do
@@ -427,21 +466,19 @@ function Push_github {
           if [ $? = 0 ]; then
             echo "上传成功"
             Initialization
+            echo -e "\n===========================上传文件至网端结束==========================\n"
             return
           else
             let k++
           fi
-          echo -e "\n===========================上传文件至网端结束==========================\n"
         done
         echo "上传失败，正在恢复文件"
         Initialization
       fi
-      echo -e "\n===========================上传文件至网端结束==========================\n"
     else
       echo "无文件变更，取消上传，跳出并恢复文件"
       Initialization
     fi
-    echo -e "\n===========================上传文件至网端结束==========================\n"
   else
     echo "文件夹错误，取消上传"
     Initialization
@@ -451,11 +488,13 @@ function Push_github {
 
 #执行函数
 echo "开始运行"
+socks_git_set
 Pull_diy_Third_party_warehouse
 Count_diy_party_warehouse
 Change_diy_party_warehouse
 Update_Own_Raw
 Local_Change_diy_party_warehouse
 Push_github
+socks_git_unset
 echo "运行结束，退出"
 exit

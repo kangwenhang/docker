@@ -1,5 +1,5 @@
-##上传脚本3.0版本---参数说明
-##更新说明：3.0切换底层为ubuntu,crontab改为自动识别更新（crontab中执行必须采用绝对地址）
+##上传脚本3.2版本---参数说明
+##更新说明：3.2更新为====增加sock5代理用法
 
 ##############################################自定义合并上传仓库变量############################################
 #网络协议版本
@@ -7,6 +7,12 @@ http_version="HTTP/2"
 
 #自定义代理加速
 github_proxy_url="https://ghproxy.com/"
+
+#sock5代理
+##sock5_diy请填写ip:端口，例如：172.0.0.1:7891
+##http_proxy请填写相关指令（【不填写】或者填写【global】为git全局代理，填写【push】为仅上传使用代理，填写指定地址则为单指向使用代理（例如：http_proxy="https://github.com" 则是代理指向github.com））
+sock5_diy=''
+http_proxy=""
 
 #设定git超时 【Limit】速度单位：B 【Time】时间单位：秒
 lowSpeedLimit="1000"
