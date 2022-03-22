@@ -53,7 +53,7 @@ function socks_git_set {
       git config --global http.proxy "socks5://$sock5_diy"
       git config --global https.proxy "socks5://$sock5_diy"
     elif [ ! "$sock5_diy" = "" ] && [ "$http_proxy" = "push" ]; then
-      echo "设置为仅上传使用代理"
+      echo "设置为仅push及使pull用代理"
       push_diy=1
     elif [ ! "$sock5_diy" = "" ] && [ ! "$http_proxy" = "" ]; then
       echo "设置为指定地址模式" 
@@ -182,6 +182,10 @@ function Git_Backup_Old {
 
 #pull函数
 function Git_Pull {
+  if [ "$push_diy" = "1" ]; then
+    git config --global http.proxy "socks5://$sock5_diy"
+    git config --global https.proxy "socks5://$sock5_diy"
+  fi
   cd $repo_path
   git remote remove origin
   git remote add origin $pint_warehouse
@@ -189,8 +193,10 @@ function Git_Pull {
   ExitStatusShell=$?
   git reset --hard origin/$pint_branch
   if [ $? = 0 ] && [ $ExitStatusShell = 0 ]; then
+    socks_git_unset
     Git_Backup
   else
+    socks_git_unset
     echo "清理失败缓存，并采用clone"
     rm -rf $repo_path
     Git_Clone
