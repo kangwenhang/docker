@@ -56,7 +56,7 @@ function Git_PullShell {
 }
 
 function Update_Config {
-  if [ -d "$repo_docker" ];then
+  if [ -d "$repo_docker" ]; then
     echo -e "检测到文件夹，采用pull更新"
     Git_PullShell
   else

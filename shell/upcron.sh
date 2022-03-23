@@ -24,7 +24,7 @@ do
     package_md5_old=$(cat $md5|sed 's/ //g')
     echo $package_md5_new
     echo $package_md5_old
-    if [ "$package_md5_new" == "$package_md5_old" ];then
+    if [ "$package_md5_new" == "$package_md5_old" ]; then
         echo ""
     else
         echo "定时变动"
