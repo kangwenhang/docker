@@ -47,7 +47,7 @@ fi
 
 echo -e "==================2. 启动定时同步（实时）========================\n"
 cd ${dir_root}/shell
-nohup ./upcron.sh >/dev/null 2>log &
+pm2 start 'bash upcron.sh'
 echo -e "定时同步启动成功...\n"
 
 echo -e "======================3.启动定时========================\n"
