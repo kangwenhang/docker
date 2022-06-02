@@ -23,7 +23,7 @@ function Initialization {
     done
   fi
   if [[ "$number" -eq "" ]]; then
-    $number="0"
+    number="0"
   fi
   sleep 3s
 }
