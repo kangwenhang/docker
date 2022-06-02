@@ -22,6 +22,9 @@ function Initialization {
       rm -rf $y >/dev/null 2>&1
     done
   fi
+  if [ "$number" -eq "" ]; then
+    $number="0"
+  fi
   sleep 3s
 }
 
@@ -443,31 +446,30 @@ function Push_github {
     if test -s $submit/commit.log; then
       echo "文件存在变更，正常上传"
       source $shell_model/submit.sh > $submit/1.log
-      git config user.name "$diy_user_name"
-      git config user.email "$diy_user_email"
-      git commit --allow-empty -m "$diy_commit"
-      git config --global --add core.filemode false
-      git config --global sendpack.sideband false
-      git config --local sendpack.sideband false
-      git config --global http.lowSpeedLimit 1000
-      git config --global http.lowSpeedTime 60
-      git config --global http.postBuffer 524288000
-      git config --global http.sslVerify "false"
-      if [ "$push_diy" = "1" ]; then
-        git config --global http.proxy "socks5://$sock5_diy"
-        git config --global https.proxy "socks5://$sock5_diy"
-      fi
-      git push --force "https://$diy_user_name:$github_api@$diy_url" HEAD:$diy_branch
-      if [ $? = 0 ]; then
-        echo "上传成功"
-        Initialization
-        echo -e "\n===========================上传文件至网端结束==========================\n"
-        return
-      else
-        k=1
-        while [[ k -le 3 ]]; do
-          echo "上传失败,重试执行第$k次"
-          sleep 20s
+      if [ -e "$submit/D.log" ] && test -s $submit/D.log && [ "$number" -ge "0" ]; then
+        $Dnumber="grep -o ',' $submit/D.log | wc -l"
+        (($Dnumber++))
+        echo "删除文件数量为:$Dnumber"
+        if [ "$Dnumber" -ge "$number" ]; then
+          echo "文件删除数量大于等于设定值，请确认文件并调整设定值后重新运行脚本，以防出错"
+          Initialization
+          exit
+        else
+          echo "脚本文件正常，进行下一步"
+          git config user.name "$diy_user_name"
+          git config user.email "$diy_user_email"
+          git commit --allow-empty -m "$diy_commit"
+          git config --global --add core.filemode false
+          git config --global sendpack.sideband false
+          git config --local sendpack.sideband false
+          git config --global http.lowSpeedLimit 1000
+          git config --global http.lowSpeedTime 60
+          git config --global http.postBuffer 524288000
+          git config --global http.sslVerify "false"
+          if [ "$push_diy" = "1" ]; then
+            git config --global http.proxy "socks5://$sock5_diy"
+            git config --global https.proxy "socks5://$sock5_diy"
+          fi
           git push --force "https://$diy_user_name:$github_api@$diy_url" HEAD:$diy_branch
           if [ $? = 0 ]; then
             echo "上传成功"
@@ -475,11 +477,24 @@ function Push_github {
             echo -e "\n===========================上传文件至网端结束==========================\n"
             return
           else
-            let k++
+            k=1
+            while [[ k -le 3 ]]; do
+              echo "上传失败,重试执行第$k次"
+              sleep 20s
+              git push --force "https://$diy_user_name:$github_api@$diy_url" HEAD:$diy_branch
+              if [ $? = 0 ]; then
+                echo "上传成功"
+                Initialization
+                echo -e "\n===========================上传文件至网端结束==========================\n"
+                return
+              else
+                let k++
+              fi
+            done
+            echo "上传失败，正在恢复文件"
+            Initialization
           fi
-        done
-        echo "上传失败，正在恢复文件"
-        Initialization
+        fi
       fi
     else
       echo "无文件变更，取消上传，跳出并恢复文件"
@@ -488,8 +503,8 @@ function Push_github {
   else
     echo "文件夹错误，取消上传"
     Initialization
+    echo -e "\n===========================上传文件至网端结束==========================\n" 
   fi
-  echo -e "\n===========================上传文件至网端结束==========================\n"
 }
 
 #执行函数

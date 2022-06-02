@@ -1,5 +1,5 @@
-##上传脚本3.2版本---参数说明
-##更新说明：3.2更新为====增加sock5代理用法
+##上传脚本3.3版本---参数说明
+##更新说明：3.3更新为====增加number变量，防止误删除
 
 ##############################################自定义合并上传仓库变量############################################
 #网络协议版本
@@ -68,6 +68,8 @@ github_api="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 #提交名称及地址（commit不填写默认拉取主仓库的更新日志，diy_url地址【不带https://】）
 ##库在云端必须存在
+##number为删除数量，若删除数量大于设定值则不会上传，需要修改nmuber值（若nmuber为负数，则默认不判断）
+number="-1"
 diy_commit="提交测试"
 diy_url="github.com/kangwenhang/baibai.git"
 diy_branch="master"
