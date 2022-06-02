@@ -22,7 +22,7 @@ function Initialization {
       rm -rf $y >/dev/null 2>&1
     done
   fi
-  if [ "$number" -eq "" ]; then
+  if [[ "$number" -eq "" ]]; then
     $number="0"
   fi
   sleep 3s
