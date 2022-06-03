@@ -490,7 +490,7 @@ function Push_github {
       source $shell_model/submit.sh > $submit/1.log
       if [ -e "$submit/D.log" ] && test -s $submit/D.log && [ "$number" -ge "0" ]; then
         Dnumber=`grep -o ',' $submit/D.log | wc -l`
-        (($Dnumber++))
+        let Dnumber++
         echo "存在删除文件，删除文件数量为:$Dnumber"
         if [ "$Dnumber" -ge "$number" ]; then
           echo "文件删除数量大于等于设定值，请确认文件并调整设定值后重新运行脚本，以防出错"
