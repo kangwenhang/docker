@@ -68,7 +68,7 @@ github_api="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 #提交名称及地址（commit不填写默认拉取主仓库的更新日志，diy_url地址【不带https://】）
 ##库在云端必须存在
-##number为删除数量，若删除数量大于设定值则不会上传，需要修改nmuber值（若nmuber为负数，则默认不判断）
+##number为删除数量，若删除数量大于等于设定值则不会上传，需要修改nmuber值（若nmuber为负数，则默认不判断）
 number="-1"
 diy_commit="提交测试"
 diy_url="github.com/kangwenhang/baibai.git"
