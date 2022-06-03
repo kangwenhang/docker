@@ -489,7 +489,7 @@ function Push_github {
       echo "文件存在变更，正常上传"
       source $shell_model/submit.sh > $submit/1.log
       if [ -e "$submit/D.log" ] && test -s $submit/D.log && [ "$number" -ge "0" ]; then
-        $Dnumber=`grep -o ',' $submit/D.log | wc -l`
+        Dnumber=grep -o ',' $submit/D.log | wc -l
         (($Dnumber++))
         echo "存在删除文件，删除文件数量为:$Dnumber"
         if [ "$Dnumber" -ge "$number" ]; then
