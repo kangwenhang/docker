@@ -10,7 +10,8 @@ ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     dir_root=/push
 SHELL ["/bin/bash", "-c"]
 WORKDIR ${dir_root}
-RUN apt-get upgrade \
+RUN sed -i s@/archive.ubuntu.com/@//mirrors.tuna.tsinghua.edu.cn/@g /etc/apt/sources.list \
+    && apt-get upgrade \
     && apt-get update \
     && apt-get install -y bash \
                           git \
