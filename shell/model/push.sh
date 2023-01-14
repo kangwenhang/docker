@@ -161,11 +161,11 @@ function Pull_diy_Third_party_warehouse {
 function Git_Backup {
   echo "克隆(更新)$j号仓库成功，开始备份仓库内容"
   if [ ! -d "$dir_backup/${uniq_path}" ]; then
-    cp -af $repo_path $dir_backup
+    \cp -af $repo_path $dir_backup
   else
     rsync -a $dir_backup/${uniq_path} $old_backup
     rm -rf $dir_backup/${uniq_path}
-    cp -af $repo_path $dir_backup
+    \cp -af $repo_path $dir_backup
   fi
   echo "备份成功，开始合并$j号仓库"
   Consolidated_Warehouse
@@ -176,7 +176,7 @@ function Git_Backup_Old {
   if [ ! -d "$dir_backup/${uniq_path}" ]; then
     echo "无备份文件，跳过此库"
   else
-    cp -af $dir_backup/${uniq_path}/. $repo_path
+    \cp -af $dir_backup/${uniq_path}/. $repo_path
     Consolidated_Warehouse
   fi
   echo "清理失败缓存"
@@ -222,13 +222,13 @@ function Consolidated_Warehouse {
  if [ "$pint_diy_feihebing" = "" ]; then
     echo "您已选择将所有文件合并到根目录，开始执行"
     sleep 3s
-    cp -af $repo_path/. $tongbu_temp
+    \cp -af $repo_path/. $tongbu_temp
     cd $tongbu_temp
     Delete_git
     prefix_suffix
     if [ "$pint_fugai" = "" -o "$pint_fugai" = "1"  ]; then
       echo "您已选择强制覆盖同名文件"
-      cp -af $tongbu_temp/. $tongbu_push
+      \cp -af $tongbu_temp/. $tongbu_push
     else
       echo "您已选择跳过同名文件"
       cp -rn $tongbu_temp/. $tongbu_push
@@ -241,13 +241,13 @@ function Consolidated_Warehouse {
     echo "您已选择将文件夹合并到根目录，开始执行"
     sleep 3s
     mkdir $tongbu_temp/$pint_diy_feihebing
-    cp -af $repo_path/. $tongbu_temp/$pint_diy_feihebing
+    \cp -af $repo_path/. $tongbu_temp/$pint_diy_feihebing
     cd $tongbu_temp/$pint_diy_feihebing
     Delete_git
     prefix_suffix
     if [ "$pint_fugai" = "" -o "$pint_fugai" = "1"  ]; then
       echo "您已选择强制覆盖同名文件"
-      cp -af $tongbu_temp/$pint_diy_feihebing $tongbu_push
+      \cp -af $tongbu_temp/$pint_diy_feihebing $tongbu_push
     else
       echo "您已选择跳过同名文件"
       cp -rn $tongbu_temp/$pint_diy_feihebing $tongbu_push
@@ -363,15 +363,15 @@ Update_Own_Raw () {
     if [[ $? -eq 0 ]]; then
       mv "$raw_flie/${raw_file_name[$i]}.new" "$raw_flie/${raw_file_name[$i]}"
       echo "下载 ${raw_file_name[$i]} 成功,开始备份成功后的文件"
-      cp -af $raw_flie/${raw_file_name[$i]} $dir_backup_raw/${raw_file_name[$i]}
+      \cp -af $raw_flie/${raw_file_name[$i]} $dir_backup_raw/${raw_file_name[$i]}
       echo "备份完成，开始合并"
-      cp -af $raw_flie/${raw_file_name[$i]} $tongbu_push
+      \cp -af $raw_flie/${raw_file_name[$i]} $tongbu_push
       echo "合并完成"
     else
       echo "下载 ${raw_file_name[$i]} 失败，保留之前正常下载的版本..."
       [ -f "$raw_flie/${raw_file_name[$i]}.new" ] && rm -f "$dir_raw/${raw_file_name[$i]}.new"
       echo "开始合并"
-      cp -af $raw_flie/${raw_file_name[$i]} $tongbu_push
+      \cp -af $raw_flie/${raw_file_name[$i]} $tongbu_push
       echo "合并完成"
     fi
   done
@@ -398,7 +398,7 @@ function Local_Change_diy_party_warehouse {
     echo "$diy_config文件夹为空文件夹，跳过合并"
   else
     echo "$diy_config文件夹已经存在，且存在文件，进行下一步"
-    cp -af $diy_config/. $tongbu_push
+    \cp -af $diy_config/. $tongbu_push
     echo "合并完成"
   fi
   echo -e "\n=========================识别并合并diy文件结束==========================\n"
