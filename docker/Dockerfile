@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:21.04
 ARG PUSH_URL=https://github.com/kangwenhang/docker.git
 ARG PUSH_BRANCH=master
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
