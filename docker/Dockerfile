@@ -1,4 +1,4 @@
-FROM ubuntu:21.04
+FROM ubuntu:latest
 ARG PUSH_URL=https://github.com/kangwenhang/docker.git
 ARG PUSH_BRANCH=master
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
@@ -10,8 +10,7 @@ ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     dir_root=/push
 SHELL ["/bin/bash", "-c"]
 WORKDIR ${dir_root}
-RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list \
-    && apt-get upgrade \
+RUN apt-get upgrade \
     && apt-get update \
     && apt-get install -y bash \
                           git \
